@@ -13,6 +13,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
+    <ApplicationInsightsResourceId>/subscriptions/d073a440-746b-4e81-910c-f0662c56a63b/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/immigrus</ApplicationInsightsResourceId>
   </PropertyGroup>
   <ItemGroup>
     <DnxInvisibleContent Include="bower.json" />
