@@ -18,6 +18,7 @@ namespace immigrus.Models
             // Add your customizations after calling base.OnModelCreating(builder);
         }
         public DbSet<Faq> Faq { get; set; }
+        public DbSet<Actualite> Actualite { get; set; }
 
         
     }
