@@ -8,29 +8,14 @@ using immigrus.Models;
 namespace immigrus.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160524105919_fourth")]
+    partial class fourth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("immigrus.Models.Actualite", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("Etat");
-
-                    b.Property<string>("Libelle");
-
-                    b.Property<int>("Ordre")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("images");
-
-                    b.HasKey("Id");
-                });
 
             modelBuilder.Entity("immigrus.Models.ApplicationUser", b =>
                 {
@@ -138,36 +123,6 @@ namespace immigrus.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Questions");
-
-                    b.HasKey("Id");
-                });
-
-            modelBuilder.Entity("immigrus.Models.FlashInfo", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Etat");
-
-                    b.Property<int>("Ordre")
-                        .ValueGeneratedOnAdd();
-
-                    b.HasKey("Id");
-                });
-
-            modelBuilder.Entity("immigrus.Models.Photo", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<string>("Etat");
-
-                    b.Property<string>("Libelle");
-
-                    b.Property<int>("Ordre")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("images");
 
                     b.HasKey("Id");
                 });

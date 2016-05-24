@@ -16,7 +16,6 @@ namespace immigrus.Models
 
         //Foreign key for Clients
         public string ClientsId { get; set; }
-
-        public Clients clients { get; set; }
+        
     }
 }

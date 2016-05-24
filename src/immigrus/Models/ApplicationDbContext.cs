@@ -18,12 +18,8 @@ namespace immigrus.Models
             // Add your customizations after calling base.OnModelCreating(builder);
         }
         public DbSet<Faq> Faq { get; set; }
-        public DbSet<Clients> Clients { get; set; }
-        public DbSet<Enfants> Enfants { get; set; }
         public DbSet<Actualite> Actualite { get; set; }
-        public DbSet<FlashInfo> FlashInfo { get; set; }
-        public DbSet<Photo> Photo { get; set; }
 
-
+        
     }
 }
