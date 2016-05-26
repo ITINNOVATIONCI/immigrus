@@ -12,6 +12,9 @@ namespace immigrus.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Ordre { get; set; }
         public string Description { get; set; }
+        public string Source { get; set; }
+        public string Position { get; set; }
+        public bool isPublish { get; set; }
         public string Etat { get; set; }
     }
 }

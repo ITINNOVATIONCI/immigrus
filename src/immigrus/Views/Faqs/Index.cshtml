@@ -1,50 +1,84 @@
 @model IEnumerable<immigrus.Models.Faq>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Foire aux questions";
 }
 
-<h2>Index</h2>
+@section Scripts {
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Ordre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Questions)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Etat)
-        </th>
-        <th></th>
-    </tr>
-    
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ordre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Questions)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Etat)
-        </td>
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-        </td>
-    </tr>
+<script src="/js/lib/bootstrap-table/bootstrap-table.js"></script>
+<script src="/js/lib/bootstrap-table/bootstrap-table-export.min.js"></script>
+<script src="/js/lib/bootstrap-table/tableExport.min.js"></script>
+<script src="/js/lib/bootstrap-table/bootstrap-table-init.js"></script>
+
 }
-</table>
+
+<h2>FAQ</h2>
+
+<section class="box-typical">
+    <div id="toolbar">
+        <a asp-action="Create" class="btn btn-inline btn-success"><i class="font-icon font-icon-plus"></i> Create New</a>
+    </div>
+    <div class="table-responsive">
+        <table id="table"
+               class="table table-striped"
+               data-toolbar="#toolbar"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-show-export="true"
+               data-detail-view="false"
+               data-show-pagination-switch="true"
+               data-pagination="true"
+               data-id-field="id"
+               data-page-list="[50, 100, ALL]"
+               data-show-footer="false"
+               data-response-handler="responseHandler">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ordre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Questions)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Etat)
+                    </th>
+                    <th></th>
+                </tr>             
+            </thead>
+            <tbody>
+
+               @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ordre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Questions)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Etat)
+                    </td>
+                    <td>
+                        <a class="btn-icon" asp-action="Edit" asp-route-id="@item.Id"><i class="font-icon font-icon-pencil"></i></a> |
+                        @*<a class="btn btn-inline btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                        <a class="btn-icon" asp-action="Delete" asp-route-id="@item.Id"><i class="font-icon font-icon-trash"></i></a>
+                    </td>
+                </tr>
+               }
+
+            </tbody>
+
+        </table>
+    </div>
+</section><!--.box-typical-->

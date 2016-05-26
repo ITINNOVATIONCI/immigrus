@@ -19,7 +19,7 @@ namespace immigrus.Controllers
         // GET: Faqs
         public IActionResult Index()
         {
-            return View(_context.Faq.ToList());
+            return View(_context.Faq.OrderBy(c=>c.Ordre).ToList());
         }
 
         // GET: Faqs/Details/5
