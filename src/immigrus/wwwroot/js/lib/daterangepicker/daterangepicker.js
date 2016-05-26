@@ -37,6 +37,7 @@
     var DateRangePicker = function(element, options, cb) {
 
         //default settings for options
+        moment.locale("fr");
         this.parentEl = 'body';
         this.element = $(element);
         this.startDate = moment().startOf('day');

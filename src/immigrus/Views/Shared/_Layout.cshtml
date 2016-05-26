@@ -19,8 +19,12 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <link rel="stylesheet" href="/css/lib/bootstrap-table/bootstrap-table.min.css">
     <link rel="stylesheet" href="/css/lib/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.504/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.504/styles/kendo.material.min.css" />
+
 
     @*@Html.ApplicationInsightsJavaScript(TelemetryConfiguration)*@
 </head>
@@ -93,6 +97,19 @@
                     <li><a asp-controller="FlashInfo" asp-action="Index"><span class="lbl">Liste des Enregistrements</span></a></li>
                 </ul>
             </li>
+
+            <li class="blue with-sub">
+                <span>
+                    <i class="font-icon font-icon-user"></i>
+                    <span class="lbl">Gestion des Clients</span>
+                </span>
+                <ul>
+                    <li><a asp-controller="Account" asp-action="CreerInscription"><span class="lbl">Inscription</span></a></li>
+
+                    <li><a href="profile-2.html"><span class="lbl">Liste Inscription</span></a></li>
+                </ul>
+            </li>
+
         </ul>
 
         <section>
@@ -121,8 +138,15 @@
     <script src="/js/lib/tether/tether.min.js"></script>
     <script src="/js/lib/bootstrap/bootstrap.min.js"></script>
     <script src="/js/plugins.js"></script>
-    <script src="/js/app.js"></script>
+    
 
     @RenderSection("scripts", required: false)
+
+
+    <script src="/js/app.js"></script>
+
+    
+
+   
 </body>
 </html>

@@ -68,6 +68,24 @@ $(document).ready(function() {
         }
     });
 
+    $.typeahead({
+        input: "#typeahead-search-country-v5",
+        order: "asc",
+        minLength: 1,
+        source: {
+            data: countries
+        }
+    });
+
+    $.typeahead({
+        input: "#typeahead-search-country-v7",
+        order: "asc",
+        minLength: 1,
+        source: {
+            data: countries
+        }
+    });
+
     $('#typeahead-search-country-v2').on('keyup', function() {
         if ($.trim($(this).val()) == '') {
             $('#result-container').text('No results matching');

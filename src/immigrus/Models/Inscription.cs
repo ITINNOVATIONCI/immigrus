@@ -7,10 +7,13 @@ namespace immigrus.Models
 {
     public class Inscription
     {
-        public string ClientsId { get; set; }
+        public string InscriptionId { get; set; }
+        public string ClientId { get; set; }
         public DateTime DateTrans { get; set; }
+        public string Annee { get; set; }
         public string ConfimationNumber { get; set; }
         public string Resultat { get; set; }
+        public string Etat { get; set; }
         public string Statut { get; set; }//defaut non validé
     }
 }

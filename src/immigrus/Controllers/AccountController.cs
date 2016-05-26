@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using immigrus.Models;
 using immigrus.Services;
 using immigrus.ViewModels.Account;
+using System.Globalization;
 
 namespace immigrus.Controllers
 {
@@ -23,8 +24,10 @@ namespace immigrus.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private ApplicationDbContext _dbContext;
 
         public AccountController(
+            ApplicationDbContext dbContext,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
@@ -35,6 +38,7 @@ namespace immigrus.Controllers
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
+            _dbContext = dbContext;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -434,6 +438,110 @@ namespace immigrus.Controllers
                 return View(model);
             }
         }
+
+
+
+
+
+
+
+
+
+        //
+        // POST: /Account/CreerInscription
+       
+        public IActionResult CreerInscription()
+        {
+            
+
+            // If we got this far, something failed, redisplay form
+            return View();
+        }
+
+
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreerInscription(ApplicationUserViewModel model)
+        {
+            //CultureInfo francais = CultureInfo.GetCultureInfo("fr-FR");
+            //CultureInfo anglais = CultureInfo.GetCultureInfo("en-US");
+            if (ModelState.IsValid)
+            {
+                
+
+                string clientId = Guid.NewGuid().ToString();
+
+                DateTime dt = DateTime.Parse(model.DateNais);
+                //creation user
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,ClientsId=clientId,
+                Nom=model.Nom , Prenoms=model.Prenoms, DateNais=dt , PaysNais=model.PaysNais,
+                PaysEl=model.PaysEl , LieuNais=model.LieuNais , Sexe=model.Sexe , PaysRes=model.PaysRes,
+                ZipCode=model.ZipCode , AdrPos=model.AdrPos , StatutMarital=model.StatutMarital,
+                NbEnfts=model.NbEnfts , Diplome=model.Diplome , AutresDip=model.AutresDip ,
+                ParainIdf=model.ParainIdf , Tel1=model.Tel1 , Tel2=model.Tel2 , Photo=model.Photo,
+                PhoneNumber=model.Tel1 , PhoneNumberConfirmed=true , EmailConfirmed=true};
+                
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
+                    // Send an email with this link
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                    //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation(3, "User created a new account with password.");
+
+
+
+
+
+
+
+
+
+                    //enregistrement inscription
+                    Inscription inscription = new Inscription();
+
+                    string idpart = DateTime.UtcNow.ToString("yyyyMMddhhmmss");
+                    Random rnd = new Random();
+                    int num = rnd.Next(0, 4);
+
+                    string insId = "IM" + idpart + num;
+
+                    inscription.InscriptionId = insId;
+
+                    string dat = DateTime.UtcNow.ToString();
+
+                    inscription.DateTrans = DateTime.Parse(dat);
+                    inscription.Annee = DateTime.UtcNow.Year.ToString();
+                    inscription.Etat = "ACTIF";
+                    inscription.Statut = Parametre.VALIDER;
+                    inscription.ClientId = clientId;
+
+                    _dbContext.Inscription.Add(inscription);
+                    _dbContext.SaveChanges();
+
+
+
+
+
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                }
+                AddErrors(result);
+
+
+               
+
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
 
         #region Helpers
 
