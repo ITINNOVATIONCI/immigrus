@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -13,6 +14,9 @@ using immigrus.Models;
 using immigrus.Services;
 using immigrus.ViewModels.Account;
 using System.Globalization;
+using System.IO;
+using Microsoft.AspNet.Http;
+using System.Net.Http.Headers;
 
 namespace immigrus.Controllers
 {
@@ -466,14 +470,30 @@ namespace immigrus.Controllers
         public async Task<IActionResult> CreerInscription(ApplicationUserViewModel model)
         {
             //CultureInfo francais = CultureInfo.GetCultureInfo("fr-FR");
-            //CultureInfo anglais = CultureInfo.GetCultureInfo("en-US");
+            //CultureInfo anglais = CultureInfo.GetCultureInfo("en-US");s
             if (ModelState.IsValid)
             {
                 
 
                 string clientId = Guid.NewGuid().ToString();
 
-                DateTime dt = DateTime.Parse(model.DateNais);
+
+
+                DateTime dt = Convert.ToDateTime(model.DateNais);
+                //try
+                //{
+                    
+                //    IFormatProvider culture = new System.Globalization.CultureInfo("fr-FR" );
+
+                //    DateTime dt11 = DateTime.Parse(model.DateNais, culture, System.Globalization.DateTimeStyles.AssumeLocal);
+
+                //}
+                //catch (Exception)
+                //{
+
+                //    throw;
+                //}
+
                 //creation user
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, ClientsId = clientId,
                     Nom = model.Nom, Prenoms = model.Prenoms, DateNais = dt, PaysNais = model.PaysNais,
@@ -493,8 +513,8 @@ namespace immigrus.Controllers
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User created a new account with password.");
+                   // await _signInManager.SignInAsync(user, isPersistent: false);
+                   // _logger.LogInformation(3, "User created a new account with password.");
 
 
 
@@ -513,7 +533,7 @@ namespace immigrus.Controllers
 
                     string insId = "#IM" + idpart + num;
 
-                    inscription.InscriptionId = insId;
+                    inscription.Id = insId;
 
                     string dat = DateTime.UtcNow.ToString();
 
@@ -551,6 +571,111 @@ namespace immigrus.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
+        public ActionResult ListeInscription()
+        {
+
+
+
+            List<CustomInscription> lstCustom = new List<CustomInscription>();
+
+
+            // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER).ToList();
+
+            foreach (var item in lstTrans)
+            {
+                CustomInscription cstrans = new CustomInscription();
+                var recup = _dbContext.ApplicationUser.Where(a => a.ClientsId == item.ClientId).FirstOrDefault();
+
+                cstrans.ClientId = item.ClientId;
+                cstrans.Email = recup.Email;
+                cstrans.InscriptionId = item.Id;
+                cstrans.Nom = recup.Nom+" "+ recup.Prenoms+" ("+ recup.Email+")";
+                cstrans.Prenoms = recup.Prenoms;
+                cstrans.Photo = recup.Photo;
+                cstrans.Tel1 = recup.Tel1;
+               
+
+                lstCustom.Add(cstrans);
+
+            }
+
+
+
+            return View(lstCustom);
+        }
+
+        public ActionResult ListeDV()
+        {
+
+            return View();
+        }
+
+        public ActionResult ListeConfirmationNumber()
+        {
+
+            return View();
+            
+        }
+
+
+        [HttpPost]
+        public ActionResult Save(IEnumerable<IFormFile> files)
+        {
+            // The Name of the Upload component is "files"
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+
+                if (file.Length > 0)
+                {
+                    var fileNames = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    await file.SaveAsAsync(Path.Combine(uploads, fileNames));
+                }
+
+                // Some browsers send file names with full path.
+                // We are only interested in the file name.
+                var fileName = Path.GetFileName(file.FileName);
+                    var physicalPath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
+
+                    // The files are not actually saved in this demo
+                    // file.SaveAs(physicalPath);
+                }
+            }
+
+            // Return an empty string to signify success
+            return Content("");
+        }
+
+        public ActionResult Remove(string[] fileNames)
+        {
+            // The parameter of the Remove action must be called "fileNames"
+
+            if (fileNames != null)
+            {
+                foreach (var fullName in fileNames)
+                {
+                    var fileName = Path.GetFileName(fullName);
+                    var physicalPath = Path.Combine(Microsoft.AspNet.Server.MapPath("~/App_Data"), fileName);
+
+                    // TODO: Verify user permissions
+
+                    if (System.IO.File.Exists(physicalPath))
+                    {
+                        // The files are not actually removed in this demo
+                        // System.IO.File.Delete(physicalPath);
+                    }
+                }
+            }
+
+            // Return an empty string to signify success
+            return Content("");
+        }
+
+
 
 
         #region Helpers

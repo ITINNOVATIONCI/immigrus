@@ -1,0 +1,103 @@
+
+@model List<CustomInscription>
+
+@{
+    ViewData["Title"] = "Liste Clients valides";
+    Layout = "_Layout";
+}
+
+<div class="">
+    <h3>Liste des Clients valid&eacute;s</h3>
+    <hr />
+</div>
+
+<section class="card box-typical-full-height">
+    <div class="card-block ">
+        <p>
+            @*<h3> Informations Principales</h3>*@
+        </p>
+        
+       
+
+
+            <table id="example" class="mdl-data-table" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Photo</th>
+                        <th>Nom</th>
+                        <th>Modifier</th>
+                        <th>Details</th>
+                        
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Photo</th>
+                        <th>Nom</th>
+                        <th>Modifier</th>
+                        <th>Details</th>
+                        
+                    </tr>
+                </tfoot>
+                <tbody>
+@foreach (var item in Model)
+{
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.InscriptionId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Photo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+                        <td>
+                            <a asp-action="ModifierInscription" style="font-size:medium;" asp-route-id="@item.InscriptionId">Modifier</a> 
+                        </td>
+                        <td>
+                            <a asp-action="DetailsInscription" style="font-size:medium;" asp-route-id="@item.InscriptionId">Details</a> 
+                        </td>
+                        
+                        
+                    </tr>
+}
+                </tbody>
+            </table>
+
+
+       
+
+
+
+        
+
+       
+    </div>
+
+</section>
+
+@section scriptsh {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/dataTables.material.min.css " type="text/css">
+    }
+
+
+@section scripts {
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+  @*<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>*@
+<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.11/js/dataTables.material.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable( {
+        columnDefs: [
+            {
+                targets: [ 0, 1, 2 ],
+                className: 'mdl-data-table__cell--non-numeric'
+            }
+        ]
+    } );
+} );
+</script>        }

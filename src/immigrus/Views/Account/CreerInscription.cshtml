@@ -365,6 +365,12 @@
 
                     <hr />
 
+                    <div>
+                        <div class="demo-section k-content">
+                            <input name="files" id="files" type="file" />
+                        </div>
+                    </div>
+
 
                     <div class="form-group form-group-checkbox">
                         <div class="checkbox">
@@ -706,17 +712,35 @@
 <script src="//kendo.cdn.telerik.com/2016.2.504/js/jquery.min.js" type="text/javascript"></script>
 <script src="//kendo.cdn.telerik.com/2016.2.504/js/kendo.all.min.js" type="text/javascript"></script>
 <script>
-        kendo.culture("fr-FR");
+    $("#datepicker").kendoDatePicker({
+        culture: "fr-FR",
+        // display month and year in the input
+        format: "dd/MM/yyyy"
+        //....
+    })
 
-        var dp = $("#datepicker").kendoDatePicker().data("kendoDatePicker");
+        //var dp = $("#datepicker").kendoDatePicker().data("kendoDatePicker");
 
-        dp.dateView
-          .calendar.element
-          .append('<div class="k-footer"><a href="#" class="k-link k-nav-today">' + kendo.toString(new Date(), "dd MMMM yyyy") + "</a></div>")
-          .find(".k-footer:first")
-          .remove();
+        //dp.dateView
+        //  .calendar.element
+
+        //  .append('<div class="k-footer"><a href="#" class="k-link k-nav-today">' + kendo.toString(new Date(), "dd/MM/yyyy") + "</a></div>")
+        //  .find(".k-footer:first")
+        //  .remove();
+
+       
 </script>
-
+ <script>
+                $(document).ready(function() {
+                    $("#files").kendoUpload({
+                        async: {
+                            saveUrl: "save",
+                            removeUrl: "remove",
+                            autoUpload: true
+                        }
+                    });
+                });
+            </script>
 
 
 

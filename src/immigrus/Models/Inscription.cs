@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,7 +8,8 @@ namespace immigrus.Models
 {
     public class Inscription
     {
-        public string InscriptionId { get; set; }
+        public string Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string ClientId { get; set; }
         public DateTime DateTrans { get; set; }
         public string Annee { get; set; }

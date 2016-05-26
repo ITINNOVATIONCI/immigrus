@@ -8,8 +8,8 @@ using immigrus.Models;
 namespace immigrus.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160526013249_eighth")]
-    partial class eighth
+    [Migration("20160526161242_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -135,6 +135,26 @@ namespace immigrus.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
+            modelBuilder.Entity("immigrus.Models.Enfants", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<string>("ClientsId");
+
+                    b.Property<DateTime>("DateNais");
+
+                    b.Property<string>("Nom")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Photo");
+
+                    b.Property<string>("Prenoms");
+
+                    b.Property<string>("Sexe");
+
+                    b.HasKey("Id");
+                });
+
             modelBuilder.Entity("immigrus.Models.Faq", b =>
                 {
                     b.Property<string>("Id");
@@ -161,11 +181,12 @@ namespace immigrus.Migrations
 
             modelBuilder.Entity("immigrus.Models.Inscription", b =>
                 {
-                    b.Property<string>("InscriptionId");
+                    b.Property<string>("Id");
 
                     b.Property<string>("Annee");
 
-                    b.Property<string>("ClientId");
+                    b.Property<string>("ClientId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConfimationNumber");
 
@@ -177,7 +198,7 @@ namespace immigrus.Migrations
 
                     b.Property<string>("Statut");
 
-                    b.HasKey("InscriptionId");
+                    b.HasKey("Id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>

@@ -13,14 +13,14 @@
                     <div class="dropdown user-menu">
                         <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="/img/avatar-2-64.png" alt="">
-                            <span>Bienvenue @User.GetUserName()!</span>
+                            <span style="color:#00a8ff;font-weight:bold;font-size:large;">Bienvenue @User.GetUserName()!</span>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-                            <a asp-controller="Manage" asp-action="Index"><i class="icon-user-plus"></i> My profile</a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu" style="color:#00a8ff;font-weight:bold;font-size:medium;">
+                            <a asp-controller="Manage" asp-action="Index"><i class="icon-user-plus"></i> Mon compte</a>
                             @*<a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
                                 <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>*@
                             <div class="dropdown-divider"></div>
-                            <a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-switch2"></i> Logout</a>
+                            <a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-switch2"></i> Se deconnecter</a>
                         </div>
                     </div>
 

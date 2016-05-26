@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.504/styles/kendo.material.min.css" />
 
 
+    @RenderSection("scriptsh", required: false)
+
     @*@Html.ApplicationInsightsJavaScript(TelemetryConfiguration)*@
 </head>
 <body class="with-side-menu">
@@ -106,7 +108,11 @@
                 <ul>
                     <li><a asp-controller="Account" asp-action="CreerInscription"><span class="lbl">Inscription</span></a></li>
 
-                    <li><a href="profile-2.html"><span class="lbl">Liste Inscription</span></a></li>
+                    <li><a asp-controller="Account" asp-action="ListeInscription"><span class="lbl">Liste Inscription</span></a></li>
+                    <li><a asp-controller="Account" asp-action="ListeDV"><span class="lbl">Liste DV</span></a></li>
+                    <li><a asp-controller="Account" asp-action="ListeConfirmationNumber"><span class="lbl">Liste Postulant avc CN</span></a></li>
+                    <li><a asp-controller="Account" asp-action="ListeResultat"><span class="lbl">Liste Resultat</span></a></li>
+                    <li><a asp-controller="Account" asp-action="ListeBloque"><span class="lbl">Liste Clients Bloqu&eacute;s</span></a></li>
                 </ul>
             </li>
 
