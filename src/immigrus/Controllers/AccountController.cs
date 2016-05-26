@@ -475,11 +475,12 @@ namespace immigrus.Controllers
 
                 DateTime dt = DateTime.Parse(model.DateNais);
                 //creation user
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,ClientsId=clientId,
-                Nom=model.Nom , Prenoms=model.Prenoms, DateNais=dt , PaysNais=model.PaysNais,
-                PaysEl=model.PaysEl , LieuNais=model.LieuNais , Sexe=model.Sexe , PaysRes=model.PaysRes,
-                ZipCode=model.ZipCode , AdrPos=model.AdrPos , StatutMarital=model.StatutMarital,
-                NbEnfts=model.NbEnfts , Diplome=model.Diplome , AutresDip=model.AutresDip ,
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, ClientsId = clientId,
+                    Nom = model.Nom, Prenoms = model.Prenoms, DateNais = dt, PaysNais = model.PaysNais,
+                    PaysEl = model.PaysEl, LieuNais = model.LieuNais, Sexe = model.Sexe, PaysRes = model.PaysRes,
+                    ZipCode = model.ZipCode, AdrPos = model.AdrPos, StatutMarital = model.StatutMarital,
+                    NbEnfts = model.NbEnfts, Diplome = model.Diplome, AutresDip = model.AutresDip,
+                    DateCreation = DateTime.UtcNow,
                 ParainIdf=model.ParainIdf , Tel1=model.Tel1 , Tel2=model.Tel2 , Photo=model.Photo,
                 PhoneNumber=model.Tel1 , PhoneNumberConfirmed=true , EmailConfirmed=true};
                 
@@ -510,7 +511,7 @@ namespace immigrus.Controllers
                     Random rnd = new Random();
                     int num = rnd.Next(0, 4);
 
-                    string insId = "IM" + idpart + num;
+                    string insId = "#IM" + idpart + num;
 
                     inscription.InscriptionId = insId;
 
@@ -522,8 +523,17 @@ namespace immigrus.Controllers
                     inscription.Statut = Parametre.VALIDER;
                     inscription.ClientId = clientId;
 
-                    _dbContext.Inscription.Add(inscription);
-                    _dbContext.SaveChanges();
+                    try
+                    {
+                        _dbContext.Inscription.Add(inscription);
+                        _dbContext.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw;
+                    }
+                    
 
 
 
