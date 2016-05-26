@@ -8,13 +8,30 @@ using immigrus.Models;
 namespace immigrus.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160524024537_fourth")]
+    partial class fourth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("immigrus.Models.Actualite", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<string>("Etat");
+
+                    b.Property<string>("Libelle");
+
+                    b.Property<int>("Ordre")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("images");
+
+                    b.HasKey("Id");
+                });
 
             modelBuilder.Entity("immigrus.Models.ApplicationUser", b =>
                 {
@@ -22,37 +39,17 @@ namespace immigrus.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("AdrPos");
-
-                    b.Property<string>("AutresDip");
-
-                    b.Property<string>("ClientsId");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<DateTime>("DateCreation");
-
-                    b.Property<DateTime>("DateNais");
-
-                    b.Property<string>("Diplome");
 
                     b.Property<string>("Email")
                         .HasAnnotation("MaxLength", 256);
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("Etat");
-
-                    b.Property<string>("LieuNais");
-
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NbEnfts");
-
-                    b.Property<string>("Nom");
 
                     b.Property<string>("NormalizedEmail")
                         .HasAnnotation("MaxLength", 256);
@@ -60,44 +57,18 @@ namespace immigrus.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasAnnotation("MaxLength", 256);
 
-                    b.Property<string>("ParainIdf");
-
-                    b.Property<string>("Password");
-
                     b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PaysEl");
-
-                    b.Property<string>("PaysNais");
-
-                    b.Property<string>("PaysRes");
 
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("Photo");
-
-                    b.Property<string>("Prenoms");
-
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("Sexe");
-
-                    b.Property<string>("Statut");
-
-                    b.Property<string>("StatutMarital");
-
-                    b.Property<string>("Tel1");
-
-                    b.Property<string>("Tel2");
 
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
-
-                    b.Property<string>("ZipCode");
 
                     b.HasKey("Id");
 
@@ -110,26 +81,92 @@ namespace immigrus.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
+            modelBuilder.Entity("immigrus.Models.Clients", b =>
+                {
+                    b.Property<string>("ClientsId");
+
+                    b.Property<string>("AdrPos");
+
+                    b.Property<string>("AutresDip");
+
+                    b.Property<string>("ConfimationNumber");
+
+                    b.Property<DateTime>("DateCreation");
+
+                    b.Property<DateTime>("DateNais");
+
+                    b.Property<string>("Diplome");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Etat");
+
+                    b.Property<string>("LieuNais");
+
+                    b.Property<string>("NbEnfts");
+
+                    b.Property<string>("Nom");
+
+                    b.Property<string>("ParainIdf");
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("PaysEl");
+
+                    b.Property<string>("PaysNais");
+
+                    b.Property<string>("PaysRes");
+
+                    b.Property<string>("Photo");
+
+                    b.Property<string>("Prenoms");
+
+                    b.Property<string>("Resultat");
+
+                    b.Property<string>("Sexe");
+
+                    b.Property<string>("Statut");
+
+                    b.Property<string>("StatutMarital");
+
+                    b.Property<string>("Tel1");
+
+                    b.Property<string>("Tel2");
+
+                    b.Property<string>("ZipCode");
+
+                    b.HasKey("ClientsId");
+                });
+
+            modelBuilder.Entity("immigrus.Models.Enfants", b =>
+                {
+                    b.Property<string>("EnfantsId");
+
+                    b.Property<string>("ClientsId");
+
+                    b.Property<DateTime>("DateNais");
+
+                    b.Property<string>("Nom");
+
+                    b.Property<string>("Prenoms");
+
+                    b.Property<string>("sexe");
+
+                    b.HasKey("EnfantsId");
+                });
+
             modelBuilder.Entity("immigrus.Models.Faq", b =>
                 {
                     b.Property<string>("Id");
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<string>("Description");
-
                     b.Property<string>("Etat");
 
                     b.Property<int>("Ordre")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Position");
-
                     b.Property<string>("Questions");
-
-                    b.Property<string>("Source");
-
-                    b.Property<bool>("isPublish");
 
                     b.HasKey("Id");
                 });
@@ -244,6 +281,13 @@ namespace immigrus.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("immigrus.Models.Enfants", b =>
+                {
+                    b.HasOne("immigrus.Models.Clients")
+                        .WithMany()
+                        .HasForeignKey("ClientsId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
