@@ -26,8 +26,9 @@
                         <th>ID</th>
                         <th>Photo</th>
                         <th>Nom</th>
+                        <th>Telecharger</th>
                         <th>Modifier</th>
-                        <th>Details</th>
+                        <th>Dossier</th>
                         
                     </tr>
                 </thead>
@@ -36,8 +37,9 @@
                         <th>ID</th>
                         <th>Photo</th>
                         <th>Nom</th>
+                        <th>Telecharger</th>
                         <th>Modifier</th>
-                        <th>Details</th>
+                        <th>Dossier</th>
                         
                     </tr>
                 </tfoot>
@@ -45,15 +47,19 @@
 @foreach (var item in Model)
 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.InscriptionId)</td>
+                        <td><a href=""><b> @Html.DisplayFor(modelItem => item.InscriptionId)</b> </a></td>
                         <td>@Html.DisplayFor(modelItem => item.Photo)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+                        <td> <b> @Html.DisplayFor(modelItem => item.Nom) </b> </td>
                         <td>
-                            <a asp-action="ModifierInscription" style="font-size:medium;" asp-route-id="@item.InscriptionId">Modifier</a> 
+                            <a asp-action="TelechargerPhoto" style="font-weight:bold;"  asp-route-id="@item.InscriptionId">Photo</a>
                         </td>
                         <td>
-                            <a asp-action="DetailsInscription" style="font-size:medium;" asp-route-id="@item.InscriptionId">Details</a> 
+                            <a asp-action="ModifierInscription" style="font-weight:bold;"  asp-route-id="@item.InscriptionId">Modifier</a> 
                         </td>
+                        <td>
+                            <a asp-action="DetailsInscription" style="font-weight:bold;" asp-route-id="@item.InscriptionId">Details</a> 
+                        </td>
+                        
                         
                         
                     </tr>

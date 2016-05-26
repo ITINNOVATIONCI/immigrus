@@ -367,7 +367,7 @@
 
                     <div>
                         <div class="demo-section k-content">
-                            <input name="files" id="files" type="file" />
+                            <input name="files" id="files" value="Parcourir" type="file" />
                         </div>
                     </div>
 
@@ -737,7 +737,13 @@
                             saveUrl: "save",
                             removeUrl: "remove",
                             autoUpload: true
-                        }
+                        },                        
+                        localization: {
+                        select: 'Choisir la photo',
+                        remove: 'Supprimer la photo',
+                        uploading: 'chargement en cours',                        
+                        cancel: 'Annuler'
+                    }
                     });
                 });
             </script>

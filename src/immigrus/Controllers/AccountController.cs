@@ -531,7 +531,7 @@ namespace immigrus.Controllers
                     Random rnd = new Random();
                     int num = rnd.Next(0, 4);
 
-                    string insId = "#IM" + idpart + num;
+                    string insId = "IM" + idpart + num;
 
                     inscription.Id = insId;
 
@@ -582,7 +582,7 @@ namespace immigrus.Controllers
 
 
             // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
-            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER).OrderBy(t=>t.DateTrans).Take(30).ToList();
 
             foreach (var item in lstTrans)
             {
@@ -610,7 +610,33 @@ namespace immigrus.Controllers
         public ActionResult ListeDV()
         {
 
-            return View();
+            List<CustomInscription> lstCustom = new List<CustomInscription>();
+
+
+            // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER).OrderBy(t => t.DateTrans).Take(30).ToList();
+
+            foreach (var item in lstTrans)
+            {
+                CustomInscription cstrans = new CustomInscription();
+                var recup = _dbContext.ApplicationUser.Where(a => a.ClientsId == item.ClientId).FirstOrDefault();
+
+                cstrans.ClientId = item.ClientId;
+                cstrans.Email = recup.Email;
+                cstrans.InscriptionId = item.Id;
+                cstrans.Nom = recup.Nom + " " + recup.Prenoms + " (" + recup.Email + ")";
+                cstrans.Prenoms = recup.Prenoms;
+                cstrans.Photo = recup.Photo;
+                cstrans.Tel1 = recup.Tel1;
+
+
+                lstCustom.Add(cstrans);
+
+            }
+
+
+
+            return View(lstCustom);
         }
 
         public ActionResult ListeConfirmationNumber()
@@ -621,59 +647,59 @@ namespace immigrus.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult Save(IEnumerable<IFormFile> files)
-        {
-            // The Name of the Upload component is "files"
-            if (files != null)
-            {
-                foreach (var file in files)
-                {
+        //[HttpPost]
+        //public ActionResult Save(IEnumerable<IFormFile> files)
+        //{
+        //    // The Name of the Upload component is "files"
+        //    if (files != null)
+        //    {
+        //        foreach (var file in files)
+        //        {
 
-                if (file.Length > 0)
-                {
-                    var fileNames = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    await file.SaveAsAsync(Path.Combine(uploads, fileNames));
-                }
+        //        if (file.Length > 0)
+        //        {
+        //            var fileNames = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+        //            await file.SaveAsAsync(Path.Combine(uploads, fileNames));
+        //        }
 
-                // Some browsers send file names with full path.
-                // We are only interested in the file name.
-                var fileName = Path.GetFileName(file.FileName);
-                    var physicalPath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
+        //        // Some browsers send file names with full path.
+        //        // We are only interested in the file name.
+        //        var fileName = Path.GetFileName(file.FileName);
+        //            var physicalPath = Path.Combine(Server.MapPath("~/App_Data"), fileName);
 
-                    // The files are not actually saved in this demo
-                    // file.SaveAs(physicalPath);
-                }
-            }
+        //            // The files are not actually saved in this demo
+        //            // file.SaveAs(physicalPath);
+        //        }
+        //    }
 
-            // Return an empty string to signify success
-            return Content("");
-        }
+        //    // Return an empty string to signify success
+        //    return Content("");
+        //}
 
-        public ActionResult Remove(string[] fileNames)
-        {
-            // The parameter of the Remove action must be called "fileNames"
+        //public ActionResult Remove(string[] fileNames)
+        //{
+        //    // The parameter of the Remove action must be called "fileNames"
 
-            if (fileNames != null)
-            {
-                foreach (var fullName in fileNames)
-                {
-                    var fileName = Path.GetFileName(fullName);
-                    var physicalPath = Path.Combine(Microsoft.AspNet.Server.MapPath("~/App_Data"), fileName);
+        //    if (fileNames != null)
+        //    {
+        //        foreach (var fullName in fileNames)
+        //        {
+        //            var fileName = Path.GetFileName(fullName);
+        //            var physicalPath = Path.Combine(Microsoft.AspNet.Server.MapPath("~/App_Data"), fileName);
 
-                    // TODO: Verify user permissions
+        //            // TODO: Verify user permissions
 
-                    if (System.IO.File.Exists(physicalPath))
-                    {
-                        // The files are not actually removed in this demo
-                        // System.IO.File.Delete(physicalPath);
-                    }
-                }
-            }
+        //            if (System.IO.File.Exists(physicalPath))
+        //            {
+        //                // The files are not actually removed in this demo
+        //                // System.IO.File.Delete(physicalPath);
+        //            }
+        //        }
+        //    }
 
-            // Return an empty string to signify success
-            return Content("");
-        }
+        //    // Return an empty string to signify success
+        //    return Content("");
+        //}
 
 
 
