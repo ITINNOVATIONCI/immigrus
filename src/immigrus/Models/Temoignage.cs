@@ -12,7 +12,12 @@ namespace immigrus.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Ordre { get; set; }
         public string images { get; set; }
-        public string Libelle { get; set; }
+        public string Nom { get; set; }
+        public string Titre { get; set; }
+        public string Description { get; set; }
+        public string Source { get; set; }
+        public string Position { get; set; }
+        public bool isPublish { get; set; }
         public string Etat { get; set; }
     }
 }
