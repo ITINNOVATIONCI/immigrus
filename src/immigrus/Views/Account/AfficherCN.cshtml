@@ -1,0 +1,157 @@
+@model immigrus.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Ajout Confirmation Number";
+    Layout = "_Layout";
+}
+
+@*<h2>DetailsInscription</h2>*@
+<section class="card box-typical-full-height">
+    <div class="card-block">
+        <div class="row">
+            
+
+           
+
+                <div class="col-md-6 col-md-offset-1">
+                    <h4>Donn&eacute;es personnelles</h4>
+                    <hr />
+
+                    <p>
+                        <b> @Html.DisplayNameFor(model => model.Nom) </b>&nbsp;&nbsp;&nbsp; @Html.DisplayFor(model => model.Nom)
+
+                    </p>
+
+
+
+
+
+                    <p>
+                        <b>
+                            @Html.DisplayNameFor(model => model.Prenoms)
+                        </b>&nbsp;&nbsp;&nbsp; @Html.DisplayFor(model => model.Prenoms)
+                    </p>
+
+                    <p>
+                        <b>
+                           Date de naissance 
+                        </b>&nbsp;&nbsp;&nbsp;@Model.DateNais.ToShortDateString()
+                    </p>
+
+
+
+
+                    <p>
+                        <b>  Sexe </b>&nbsp;&nbsp;&nbsp; @Html.DisplayFor(model => model.Sexe)
+                    </p>
+
+
+
+
+
+                    <p>
+                        <b>  Lieu de naissance </b>&nbsp;&nbsp;&nbsp; @Html.DisplayFor(model => model.LieuNais)
+                    </p>
+
+
+                    <p>
+                        <b>Pays de naissance </b>&nbsp;&nbsp;&nbsp; @Html.DisplayFor(model => model.PaysNais)
+                    </p>
+
+
+                    <p>
+                        <b> Pays d'&eacute;ligibilit&eacute;</b>&nbsp;&nbsp;&nbsp; @Html.DisplayFor(model => model.PaysEl)
+                    </p>
+
+
+                    <p>
+                        <b>  Zip Code </b> &nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.ZipCode)
+                    </p>
+
+
+                    <p>
+                        <b>  Adresse postale </b>&nbsp;&nbsp;&nbsp;  @Html.DisplayFor(model => model.AdrPos)
+                    </p>
+
+
+                    <p>
+                        <b>Pays de r&eacute;sidence</b> &nbsp;&nbsp;&nbsp;  @Html.DisplayFor(model => model.PaysRes)
+                    </p>
+
+
+
+                    <p>
+                        <b>Contact 1</b>&nbsp;&nbsp;&nbsp;  @Html.DisplayFor(model => model.Tel1)
+                    </p>
+                    <p>
+                        <b>Contact 2</b>&nbsp;&nbsp;&nbsp;  @Html.DisplayFor(model => model.Tel2)
+                    </p>
+
+
+                    <p>
+                        <b>Email</b> &nbsp;&nbsp;&nbsp; @Html.DisplayFor(model => model.Email)
+                    </p>
+
+
+                    <p>
+                        <b>Diplome </b> &nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Diplome)
+                    </p>
+
+
+
+
+
+                    <p>
+                        <b>Autres</b> &nbsp;&nbsp;&nbsp; @Html.DisplayFor(model => model.AutresDip)
+                    </p>
+
+
+
+                    <p>
+                        <b>Statut marital</b> &nbsp;&nbsp;&nbsp;  @Html.DisplayFor(model => model.StatutMarital)
+                    </p>
+
+
+                    <p>
+                        <b>Nombre d'enfants</b> &nbsp;&nbsp;&nbsp;   @Html.DisplayFor(model => model.NbEnfts)
+                    </p>
+
+
+                    <p>
+                        <b>Date de cr&eacute;ation</b> &nbsp;&nbsp;&nbsp;  @Html.DisplayFor(model => model.DateCreation)
+                    </p>
+
+
+                    <p>
+                        <h4 style="color:orange;font-weight:bold;">Information DV</h4>
+                        <hr />
+                        <b>Confirmation Number  </b> &nbsp;&nbsp;&nbsp; <b style="color:red;"> @ViewBag.cn</b>
+                    </p>
+
+
+
+                </div>
+
+                <div class="pull-right" style="float:right;">
+
+                    <br /><br /><br />
+
+                    <img src="/@Html.DisplayFor(model => model.Photo)" width="160" height="160" alt="" /><br />
+                    
+                        <a href="~/@Html.DisplayFor(model => model.Photo)" style="font-weight:bold;">Telecharger la photo</a>
+
+                   
+                   
+</div>
+            </div>
+        
+
+
+                    @*<p>
+                      <b>  @Html.DisplayNameFor(model => model.Statut)</b> &nbsp;&nbsp;&nbsp; @Html.DisplayFor(model => model.Statut) @Html.DisplayFor(model => model.Statut)
+                    </p>*@
+                    
+                 
+        </div>
+    
+</section>

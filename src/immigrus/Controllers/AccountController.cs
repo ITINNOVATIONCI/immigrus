@@ -834,8 +834,36 @@ namespace immigrus.Controllers
         public IActionResult ListeConfirmationNumber()
         {
 
-            return View();
-            
+            List<CustomInscription> lstCustom = new List<CustomInscription>();
+
+
+            // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER && !string.IsNullOrEmpty(i.Resultat) && !string.IsNullOrEmpty(i.ConfimationNumber)).OrderBy(t => t.DateTrans).Take(30).ToList();
+
+            foreach (var item in lstTrans)
+            {
+                CustomInscription cstrans = new CustomInscription();
+                var recup = _dbContext.ApplicationUser.Where(a => a.ClientsId == item.ClientId).FirstOrDefault();
+
+                cstrans.ClientsId = item.ClientId;
+                cstrans.Email = recup.Email;
+                cstrans.InscriptionId = item.Id;
+                cstrans.Nom = recup.Nom + " " + recup.Prenoms + " (" + recup.Email + ")";
+                cstrans.Prenoms = recup.Prenoms;
+                cstrans.Photo = recup.Photo;
+                cstrans.Tel1 = recup.Tel1;
+                cstrans.ConfimationNumber = item.ConfimationNumber;
+                cstrans.Resultat = item.Resultat;
+
+
+                lstCustom.Add(cstrans);
+
+            }
+
+
+
+            return View(lstCustom);
+
         }
 
 
@@ -1060,6 +1088,27 @@ namespace immigrus.Controllers
             }
 
             ViewBag.idinscription = idins;
+            return View(applicationUser);
+        }
+
+
+        public IActionResult AfficherCN(string idins, string idclient)
+        {
+            if (idins == null || idclient == null)
+            {
+                return HttpNotFound();
+            }
+
+            ApplicationUser applicationUser = _dbContext.ApplicationUser.Where(m => m.ClientsId == idclient).FirstOrDefault();
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+
+            var inscription = _dbContext.Inscription.Where(i => i.Id == idins && i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF").FirstOrDefault();
+
+
+            ViewBag.cn = inscription.ConfimationNumber;
             return View(applicationUser);
         }
 
