@@ -1,20 +1,20 @@
 
-@model ApplicationUserViewModel
+@model ApplicationUser
 
 @{
-    ViewData["Title"] = "CreerInscription";
+    ViewData["Title"] = "ModifierInscription";
     Layout = "_Layout";
 }
 
 <div class="col-md-offset-1">
-    <h3>Formulaire d'inscription &agrave; la loterie Green Card</h3>
-    <p>
+    <h3>Formulaire de modification d'une inscription </h3>
+    @*<p>
 
         Veuillez fournir des informations correctes et sans erreurs afin d'&ecirc;tre s&ucirc;r  d'obtenir un visa apr&egrave; s s&eacute;lection.<br />
         Des erreurs dans vos donn&eacute;es fournies peuvent &ecirc;tre source de disqualification.
         <br /> L'inscription se fait qu'une seule et unique fois !
 
-    </p>
+    </p>*@
 </div>
 
 <section class="card box-typical-full-height">
@@ -27,7 +27,7 @@
             <div class="col-md-6 " style="font-size:medium;">
                 <span style="font-weight:bold;" >@ViewBag.errorMessage</span>
                @* <form id="form-signup_v1" name="form-signup_v1" method="POST">*@
-                <form asp-controller="Account" method="post" asp-action="CreerInscription">
+                <form asp-controller="Account" method="post" asp-action="ModifierInscription">
                     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
                     
                     <div class="form-group">
@@ -36,6 +36,7 @@
                             <input id="Nom"
                                    class="form-control"
                                    name="Nom"
+                                   value="@Html.DisplayFor(modelItem => modelItem.Nom)"
                                    type="text" data-validation="[L>=2, L<=18, MIXED]"
                                    data-validation-message="Veuillez saisir un nom valide" required />
                             <span asp-validation-for="Nom" class="text-danger"></span>
@@ -48,6 +49,7 @@
                             <input id="Prenoms"
                                    class="form-control"
                                    name="Prenoms"
+                                   value="@Html.DisplayFor(modelItem => modelItem.Prenoms)"
                                    type="text" data-validation="[L>=6, L<=18, MIXED]"
                                    data-validation-message="Veuillez saisir un prenom valide"
                                    required />
@@ -57,7 +59,7 @@
                     <div class="form-group">
                         <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-datenais">Date de naissance</label>
                         <div class="form-control-wrapper">
-                            <input id="datepicker" name="DateNais" value="11/05/2000" style="width: 100%" 
+                            <input id="datepicker" name="DateNais" value="@Html.DisplayFor(modelItem => modelItem.DateNais)" style="width: 100%" 
                                    required />
                         </div>
                     </div>
@@ -67,29 +69,12 @@
 
                     <div class="form-group">
                         <label style="font-size:large;font-weight:bold;" class="form-label">Pays de naissance : </label>
-                        @*<div class="typeahead-container">
-                            <div class="typeahead-field">
-                                <span class="typeahead-query">
-                                    <input id="typeahead-search-country-v1"
-                                           class="form-control"
-                                           name="PaysNais"
-                                           required
-                                           value="Cote d'Ivoire"
-                                           type="search"
-                                           autocomplete="off">
-                                </span>
-                                <span class="typeahead-button">
-                                    <button type="submit">
-                                        <span class="font-icon-search"></span>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>*@
+                       
                         <div class="typeahead__container">
                             <div class="typeahead__field">
 
                                 <span class="typeahead__query">
-                                    <input class="js-typeahead-country_v1" name="PaysNais" required value="Cote d'Ivoire" autocomplete="off" type="search">
+                                    <input class="js-typeahead-country_v1" name="PaysNais" required value="@Html.DisplayFor(modelItem => modelItem.PaysNais)" autocomplete="off" type="search">
                                 </span>
                                 <span class="typeahead__button">
                                     <button type="submit">
@@ -108,7 +93,7 @@
                             <div class="typeahead__field">
 
                                 <span class="typeahead__query">
-                                    <input class="js-typeahead-country_v2" name="PaysEl" required value="Cote d'Ivoire" autocomplete="off" type="search">
+                                    <input class="js-typeahead-country_v2" name="PaysEl" required value="@Html.DisplayFor(modelItem => modelItem.PaysEl)" autocomplete="off" type="search">
                                 </span>
                                 <span class="typeahead__button">
                                     <button type="submit">
@@ -128,6 +113,7 @@
                             <input id="LieuNais"
                                    class="form-control"
                                    name="LieuNais"
+                                   value="@Html.DisplayFor(modelItem => modelItem.LieuNais)"
                                    type="text" data-validation="[L>=6, L<=18, MIXED]"
                                    data-validation-message="Veuillez saisir le lieu de naissance"
                                    required />
@@ -138,9 +124,26 @@
                         <label style="font-size:large;font-weight:bold;" for="exampleSelect" class="form-control-label">Sexe : </label>
                         <div class="form-control-wrapper">
                             <select id="exampleSelect" name="Sexe" required class="form-control">
-                                <option selected>Selectionnez votre choix</option>
-                                <option>Homme</option>
-                                <option>Femme</option>
+
+                                @if (Model.Sexe == "Homme")
+                                {
+                                    
+                                    <option selected>Homme</option>
+                                    <option>Femme</option>
+                                }
+                                else if (Model.Sexe == "Femme")
+                                {
+
+                                    <option>Homme</option>
+                                    <option selected>Femme</option>
+                                }
+                                else
+                                {
+                                    <option selected> @Html.DisplayFor(modelItem => modelItem.Sexe) </option >
+                                    <option> Homme </option>
+                                    <option> Femme </option>
+                                }
+
 
                             </select>
                         </div>
@@ -148,15 +151,15 @@
 
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label">Pays de residence : </label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label">Pays de residence : </label>
                         <div class="typeahead__container">
                             <div class="typeahead__field">
 
                                 <span class="typeahead__query">
-                                    <input class="js-typeahead-country_v3" name="PaysRes" required value="Cote d'Ivoire" autocomplete="off" type="search">
+                                    <input class="js-typeahead-country_v3" name="PaysRes" required value = "@Html.DisplayFor(modelItem => modelItem.PaysRes)" autocomplete="off" type="search">
                                 </span>
                                 <span class="typeahead__button">
-                                    <button type="submit">
+                                    <button type = "submit" >
                                         <i class="typeahead__search-icon"></i>
                                     </button>
                                 </span>
@@ -166,23 +169,24 @@
                     </div>
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-zipcode">Zip code : </label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-zipcode">Zip code : </label>
                         <div class="form-control-wrapper">
-                            <input id="ZipCode"
+                            <input id = "ZipCode"
                                    class="form-control"
                                    name="ZipCode"
-                                   
+                                   value="@Html.DisplayFor(modelItem => modelItem.ZipCode)"
                                    type="text" data-validation="[L>=2, L<=18, MIXED]"
                                    data-validation-message="Veuillez saisir un Zip code valide" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-adrpos">Adresse postale : </label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-adrpos">Adresse postale : </label>
                         <div class="form-control-wrapper">
-                            <input id="AdrPos"
+                            <input id = "AdrPos"
                                    class="form-control"
                                    name="AdrPos"
+                                   value="@Html.DisplayFor(modelItem => modelItem.AdrPos)"
                                    type="text" data-validation="[L>=2, L<=18, MIXED]"
                                    data-validation-message="Veuillez saisir une adresse valide"
                                     />
@@ -191,9 +195,9 @@
 
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" for="exampleSelectstatut" class="form-control-label">Statut Marital : </label>
+                        <label style = "font-size:large;font-weight:bold;" for="exampleSelectstatut" class="form-control-label">Statut Marital : </label>
                         <div class="form-control-wrapper">
-                            <select id="exampleSelectstatut" name="StatutMarital" required class="form-control">
+                            <select id = "exampleSelectstatut" name="StatutMarital" required class="form-control">
                                 <option selected>Selectionnez votre choix</option>
                                 <option>Celibataire</option>
                                 <option>Mari&eacute;(e)</option>
@@ -201,18 +205,71 @@
                                 <option>S&eacute;par&eacute;(e)</option>
                                 <option>Veuf(ve)</option>
 
+                                @if (Model.StatutMarital == "Celibataire")
+                                {
+
+                                    
+                                    <option selected>Celibataire</option>
+                                    <option>Mari&eacute;(e)</option>
+                                    <option>Divorc&eacute; (e) l&eacute;gal(e)</option>
+                                    <option>S&eacute;par&eacute;(e)</option>
+                                    <option>Veuf(ve)</option>
+                                }
+                                else if (Model.StatutMarital == "Marié(e)")
+                                {
+
+                                    <option>Celibataire</option>
+                                    <option selected>Mari&eacute;(e)</option>
+                                    <option>Divorc&eacute; (e) l&eacute;gal(e)</option>
+                                    <option>S&eacute;par&eacute;(e)</option>
+                                    <option>Veuf(ve)</option>
+                                }
+                                else if (Model.StatutMarital == "Divorcé (e) légal(e)")
+                                {
+                                    <option>Celibataire</option>
+                                    <option >Mari&eacute;(e)</option>
+                                    <option selected>Divorc&eacute; (e) l&eacute;gal(e)</option>
+                                    <option>S&eacute;par&eacute;(e)</option>
+                                    <option>Veuf(ve)</option>
+                                }
+                                else if (Model.StatutMarital == "Séparé(e)")
+                                {
+                                    <option>Celibataire</option>
+                                    <option>Mari&eacute;(e)</option>
+                                    <option >Divorc&eacute; (e) l&eacute;gal(e)</option>
+                                    <option selected>S&eacute;par&eacute;(e)</option>
+                                    <option>Veuf(ve)</option>
+                                }
+                                else if (Model.StatutMarital == "Veuf(ve)")
+                                {
+                                    <option>Celibataire</option>
+                                    <option>Mari&eacute;(e)</option>
+                                    <option>Divorc&eacute; (e) l&eacute;gal(e)</option>
+                                    <option >S&eacute;par&eacute;(e)</option>
+                                    <option selected>Veuf(ve)</option>
+                                }
+                                else
+                                {
+                                    <option selected>@Html.DisplayFor(modelItem => modelItem.AdrPos)</option>
+                                    <option>Celibataire</option>
+                                    <option>Mari&eacute;(e)</option>
+                                    <option>Divorc&eacute; (e) l&eacute;gal(e)</option>
+                                    <option>S&eacute;par&eacute;(e)</option>
+                                    <option>Veuf(ve)</option>
+                                }
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-nb">Nombre d'enfant : </label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-nb">Nombre d'enfant : </label>
                         <div class="form-control-wrapper">
-                            <input id="NbEnfts"
+                            <input id = "NbEnfts"
                                    class="form-control"
                                    name="NbEnfts"
+                                   value="@Html.DisplayFor(modelItem => modelItem.NbEnfts)"
                                    required
-                                   type="text" data-validation="[L>=1, L<=2, MIXED]"
+                                   type = "text" data-validation="[L>=1, L<=2, MIXED]"
                                    data-validation-message="Veuillez saisir un nombre d'enfants" />
                         </div>
                     </div>
@@ -221,14 +278,28 @@
 
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-diplome">Diplome : </label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-diplome">Diplome : </label>
                         <div class="form-control-wrapper">
                             <div class="radio">
-                                <input type="radio" name="Diplome" id="radio-1" value="BAC">
-                                <label for="radio-1">BAC </label>
-                            
-                                <input type="radio" name="Diplome" id="radio-2" value="BTS" >
-                                <label for="radio-2">BTS </label>
+
+                                @if (Model.Diplome == "BAC")
+                                {
+                                    <input type="radio" name="Diplome" id="radio-1" checked value="BAC">
+                                    <label for="radio-1">BAC</label>
+                                    <input type="radio" name="Diplome" id="radio-2" value="BTS">
+                                    <label for="radio-2">BTS</label>
+                                }
+                                else
+                                {
+                                    <input type="radio" name="Diplome" id="radio-1"  value="BAC">
+                                    <label for="radio-1">BAC</label>
+                                    <input type="radio" name="Diplome" id="radio-2" checked value="BTS">
+                                    <label for="radio-2">BTS</label>
+                                }
+
+
+
+
                             </div>
 
 
@@ -239,9 +310,10 @@
 
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-autres">Autres : </label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-autres">Autres : </label>
                         <div class="form-control-wrapper">
-                            <input id="AutresDip"
+                            <input id = "AutresDip"
+                                   value="@Html.DisplayFor(modelItem => modelItem.AutresDip)"
                                    class="form-control"
                                    name="AutresDip" />
                         </div>
@@ -249,11 +321,12 @@
 
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-parain">Parain ID (facultatif) : </label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-parain">Parain ID(facultatif) : </label>
                         <div class="form-control-wrapper">
-                            <input id="ParainIdf"
+                            <input id = "ParainIdf"
                                    class="form-control"
                                    name="ParainIdf"
+                                   value="@Html.DisplayFor(modelItem => modelItem.ParainIdf)"
                                    placeholder="saisissez l'identifiant du parain" />
                         </div>
                     </div>
@@ -263,35 +336,38 @@
                     </p>
                     <hr />
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-email">Email : </label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-email">Email : </label>
                         <div class="form-control-wrapper">
-                            <input id="signup_v1-email"
+                            <input id = "signup_v1-email"
                                    class="form-control"
                                    name="Email"
                                    type="text"
+                                   value="@Html.DisplayFor(modelItem => modelItem.Email)"
                                    required
                                    data-validation="[EMAIL]">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-email">Repetez Adresse Email :</label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-email">Repetez Adresse Email :</label>
                         <div class="form-control-wrapper">
-                            <input id="signup_v1-email"
+                            <input id = "signup_v1-email"
                                 class="form-control"
                                 name="ConfirmEmail"
                                 type="text"
+                                   value="@Html.DisplayFor(modelItem => modelItem.Email)"
                                    required
                                 data-validation="[EMAIL]"
                                 data-validation-message="$ ne correspond pas à l'email saisi">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-password">Mot de passe : </label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-password">Mot de passe : </label>
                         <div class="form-control-wrapper">
-                            <input id="signup_v1-password"
+                            <input id = "signup_v1-password"
                                    class="form-control"
                                    name="Password"
+                                   value="@Html.DisplayFor(modelItem => modelItem.Password)"
                                    type="password" data-validation="[L>=6]"
                                    data-validation-message="$ must be at least 6 characters"
                                    required >
@@ -300,11 +376,12 @@
 
 
                     <div class="form-group">
-                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-password-confirm">Confirmer mot de passe :</label>
+                        <label style = "font-size:large;font-weight:bold;" class="form-label" for="signup_v1-password-confirm">Confirmer mot de passe :</label>
                         <div class="form-control-wrapper">
-                            <input id="signup_v1-password-confirm"
+                            <input id = "signup_v1-password-confirm"
                                    class="form-control"
                                    name="ConfirmPassword"
+                                   value="@Html.DisplayFor(modelItem => modelItem.Password)"
                                    type="password" data-validation="[V==Password]"
                                    data-validation-message="$ ne correspond pas au mot de passe"
                                    required >
@@ -336,6 +413,7 @@
 
                                 <input type="text" class="form-control" name="Tel1"
                                        data-validation="[L>=8, L<=11, MIXED]"
+                                       value="@Html.DisplayFor(modelItem => modelItem.Tel1)"
                                        data-validation-message="Veuillez saisir un numero valide"
                                        id="phone-mask-input-immigrus"
                                        required >
@@ -352,6 +430,7 @@
                             <fieldset class="form-group">
                                 
                                 <input type="tel" class="form-control" name="Tel2"
+                                       value="@Html.DisplayFor(modelItem => modelItem.Tel2)"
                                        id="phone-mask-input-immigrus">
                                 <small class="text-muted">exemple: 00000000</small>
                             </fieldset>
@@ -373,8 +452,9 @@
                         </div>
                     </div>
 
+                    <span style="color:red;">*Veuillez laisser vide pour conserver l'ancienne photo</span>
 
-                    <div class="form-group form-group-checkbox">
+                    @*<div class="form-group form-group-checkbox">
                         <div class="checkbox">
                             <input id="signup_v2-agree"
                                    name="signup_v2[agree]"
@@ -384,14 +464,36 @@
                                    required >
                             <label style="font-size:large;" for="signup_v2-agree">J'accepte les <a href="#"> Termes et Conditions d'Utilisation</a> et la <a href="#">Politique de Confidentialit&eacute;</a> de Immigrus</label>
                         </div>
-                    </div>
+                    </div>*@
 
                     
+                    <div class="form-group">
+                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-diplome">Statut du dossier : </label>
+                        <div class="form-control-wrapper">
+                            <div class="radio">
 
+                               
+                                    <input type="radio" name="Statut" id="radio-1" checked value="VALIDER">
+                                    <label for="radio-1">VALIDER</label>
+                                    <input type="radio" name="Statut" id="radio-2"  value="NON VALIDER">
+                                    <label for="radio-2">NON VALIDER</label>
+                      
+
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="ClientsId" value="@ViewBag.inscription.ClientId" />
+                    <input type="hidden" name="Id" value="@ViewBag.inscription.Id" />
                     
 
                     <div class="form-group">
-                        <button type="submit" id="btn" class="btn-large waves-effect waves-light blue">Valider</button>
+                        <button type="submit" class="btn-large waves-effect waves-light blue">Modifier</button>
                     </div>
                 </form>
             </div>
@@ -757,15 +859,8 @@
                             }
                     });
 
-                    $('#btn').bind("submit", function () {
-                        var imgVal = $('[type=file]').val();
-                        if (imgVal == '') {
-                            alert("Veuillez selectionner une photo svp");
-                            return false;
-                        }
 
-
-                    });
+                   
 
                 });
             </script>

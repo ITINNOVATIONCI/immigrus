@@ -11,13 +11,10 @@
     <hr />
 </div>
 
-<section class="card box-typical-full-height">
-    <div class="card-block ">
-        <p>
-            @*<h3> Informations Principales</h3>*@
-        </p>
-        
-       
+<div class="row">
+    <section class="card box-typical-dashboard">
+        <div class="card-block ">
+
 
 
             <table id="example" class="mdl-data-table" cellspacing="0" width="100%">
@@ -48,19 +45,37 @@
                     {
                         <tr>
                             <td><a href=""><b> @Html.DisplayFor(modelItem => item.InscriptionId)</b></a></td>
-                            <td>@Html.DisplayFor(modelItem => item.Photo)</td>
+                            <td><img src="/@Html.DisplayFor(modelItem => item.Photo)" width="40" height="40" /></td>
                             <td><b> @Html.DisplayFor(modelItem => item.Nom)</b></td>
                             <td><b> @Html.DisplayFor(modelItem => item.Tel1)</b></td>
                             <td>
-                                <a asp-action="AjouterCN" style="font-weight:bold;" asp-route-id="@item.InscriptionId">Ajouter</a>
+                                @if (string.IsNullOrEmpty(item.ConfimationNumber))
+                                {
+                                    <a asp-action="AjouterCN" style="font-weight:bold;" asp-route-idclient="@item.ClientsId" asp-route-idins="@item.InscriptionId">
+
+                                        Ajouter
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href=""  style="font-weight:bold;">OK</a>
+                                }
+
                             </td>
                             <td>
-                                <a asp-action="ResultatInscription" style="font-weight:bold;" asp-route-id="@item.InscriptionId">Consulter</a>
-                            </td>
+                                @if (string.IsNullOrEmpty(item.Resultat))
+                                {
+                                    <a asp-action="ResultatInscriptionDV" style="font-weight:bold;" asp-route-idclient="@item.ClientsId" asp-route-idins="@item.InscriptionId">Consulter</a>
+                                }
+                                else
+                                {
+                                    <a href="" style="font-weight:bold;">OK</a>
+                                }
+                             </td>
                             <td>
-                                <a asp-action="DetailsInscriptionDV" style="font-weight:bold;" asp-route-id="@item.InscriptionId">Details</a>
+                                <a asp-action="DetailsInscriptionDV" style="font-weight:bold;" asp-route-id="@item.ClientsId">Details</a> 
                             </td>
-                            
+
 
 
                         </tr>
@@ -69,17 +84,17 @@
             </table>
 
 
-       
 
 
 
-        
 
-       
-    </div>
 
-</section>
 
+
+        </div>
+
+    </section>
+</div>
 @section scriptsh {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" type="text/css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/dataTables.material.min.css " type="text/css">

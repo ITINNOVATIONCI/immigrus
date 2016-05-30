@@ -7,7 +7,7 @@
 }
 
 <div class="">
-    <h3>Liste des Clients valid&eacute;s</h3>
+    <h3>Liste des Clients valid&eacute;s @ViewBag.Annee</h3>
     <hr />
 </div>
 
@@ -48,16 +48,17 @@
 {
                     <tr>
                         <td><a href=""><b> @Html.DisplayFor(modelItem => item.InscriptionId)</b> </a></td>
-                        <td>@Html.DisplayFor(modelItem => item.Photo)</td>
+                        <td> <img  src="/@Html.DisplayFor(modelItem => item.Photo)" width="40" height="40">  </td>
                         <td> <b> @Html.DisplayFor(modelItem => item.Nom) </b> </td>
                         <td>
-                            <a asp-action="TelechargerPhoto" style="font-weight:bold;"  asp-route-id="@item.InscriptionId">Photo</a>
+                            <a href="~/@Html.DisplayFor(modelItem => item.Photo)" style="font-weight:bold;">Photo</a>
+                            
+</td>
+                        <td>
+                            <a asp-action="ModifierInscription" asp-controller="Account" style="font-weight:bold;"  asp-route-id="@item.InscriptionId" asp-route-clientsId="@item.ClientsId">Modifier</a> 
                         </td>
                         <td>
-                            <a asp-action="ModifierInscription" style="font-weight:bold;"  asp-route-id="@item.InscriptionId">Modifier</a> 
-                        </td>
-                        <td>
-                            <a asp-action="DetailsInscription" style="font-weight:bold;" asp-route-id="@item.InscriptionId">Details</a> 
+                            <a asp-action="DetailsInscription" asp-controller="Account" style="font-weight:bold;" asp-route-id="@item.ClientsId">Details</a> 
                         </td>
                         
                         
@@ -86,17 +87,19 @@
 
 
 @section scripts {
-    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>*@
 
   @*<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>*@
 <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.11/js/dataTables.material.min.js"></script>
 
+<script src="/js/jquery.lazyload.min.js"></script>
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function () {
+       
     $('#example').DataTable( {
         columnDefs: [
             {
@@ -135,5 +138,9 @@ $(document).ready(function() {
 
 
 </script>       
-    
+    <script>
+        $(function () {
+            $("img.lazy").lazyload();
+        });
+    </script>
      }
