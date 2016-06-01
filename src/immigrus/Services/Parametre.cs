@@ -12,6 +12,7 @@ namespace immigrus.Services
         public static string ACTIF = "ACTIF";
         public static string ARCHIVER = "ARCHIVER";
         public static string ECHEC = "ECHEC";
+        public static string BLOQUE = "BLOQUE";
         public static string ADMIS = "ADMIS";
         public static string FULLPATH = "/wwwroot/img/uploads";
         public static string SMALLPATH = "img/uploads/";

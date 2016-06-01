@@ -21,6 +21,7 @@ namespace immigrus.Models
         public DbSet<Actualite> Actualite { get; set; }
         public DbSet<Inscription> Inscription { get; set; }
         public DbSet<Enfants> Enfants { get; set; }
+        public DbSet<Pays> Pays { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         
 

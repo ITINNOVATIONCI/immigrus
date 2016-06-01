@@ -2,12 +2,12 @@
 @model List<CustomInscription>
 
 @{
-    ViewData["Title"] = "Liste Clients valides";
+    ViewData["Title"] = "Liste Clients bloques";
     Layout = "_Layout";
 }
 
 <div class="">
-    <h3>Liste des Clients valid&eacute;s @ViewBag.Annee</h3>
+    <h3>Liste des Clients bloqu&eacute;s @ViewBag.Annee</h3>
     <hr />
 </div>
 
@@ -26,10 +26,9 @@
                         <th>ID</th>
                         <th>Photo</th>
                         <th>Nom</th>
-                        <th>Telecharger</th>
-                        <th>Modifier</th>
-                        <th>Dossier</th>
-                        <th>Enfants/Conjoints</th>
+                        <th>Contacts</th>
+                        <th>Debloquer</th>
+                       
                         
                     </tr>
                 </thead>
@@ -38,10 +37,8 @@
                         <th>ID</th>
                         <th>Photo</th>
                         <th>Nom</th>
-                        <th>Telecharger</th>
-                        <th>Modifier</th>
-                        <th>Dossier</th>
-                        <th>Enfants/Conjoints</th>
+                        <th>Contacts</th>
+                        <th>Debloquer</th>
                         
                     </tr>
                 </tfoot>
@@ -52,18 +49,10 @@
                         <td><a href=""><b> @Html.DisplayFor(modelItem => item.InscriptionId)</b> </a></td>
                         <td> <img  src="/@Html.DisplayFor(modelItem => item.Photo)" width="40" height="40">  </td>
                         <td> <b> @Html.DisplayFor(modelItem => item.Nom) </b> </td>
+                        <td> <b> @Html.DisplayFor(modelItem => item.Tel1) </b> </td>
+                        
                         <td>
-                            <a href="~/@Html.DisplayFor(modelItem => item.Photo)" style="font-weight:bold;">Photo</a>
-                            
-</td>
-                        <td>
-                            <a asp-action="ModifierInscription" asp-controller="Account" style="font-weight:bold;"  asp-route-id="@item.InscriptionId" asp-route-clientsId="@item.ClientsId">Modifier</a> 
-                        </td>
-                        <td>
-                            <a asp-action="DetailsInscription" asp-controller="Account" style="font-weight:bold;" asp-route-id="@item.ClientsId">Details</a> 
-                        </td>
-                        <td>
-                            <a asp-action="AjouterEnfants" asp-controller="Account" style="font-weight:bold;" asp-route-idclient="@item.ClientsId">Ajouter</a>
+                            <a asp-action="DebloquerClient" asp-controller="Account" style="font-weight:bold;" asp-route-idins="@item.InscriptionId">Debloquer</a>
                         </td>
                         
                         

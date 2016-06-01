@@ -8,9 +8,10 @@ using immigrus.Models;
 namespace immigrus.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160530160202_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -190,8 +191,6 @@ namespace immigrus.Migrations
 
                     b.Property<string>("Annee");
 
-                    b.Property<string>("CaseNumber");
-
                     b.Property<string>("ClientId")
                         .ValueGeneratedOnAdd();
 
@@ -212,12 +211,14 @@ namespace immigrus.Migrations
                 {
                     b.Property<string>("Id");
 
+                    b.Property<string>("ClientsId");
+
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Descriptions");
 
-                    b.Property<string>("Nationalite");
+                    b.Property<DateTime>("Nationalite");
 
                     b.HasKey("Id");
                 });

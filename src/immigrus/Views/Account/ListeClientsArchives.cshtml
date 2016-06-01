@@ -2,17 +2,17 @@
 @model List<CustomInscription>
 
 @{
-    ViewData["Title"] = "Liste Clients valides";
+    ViewData["Title"] = "Liste des Clients Archives";
     Layout = "_Layout";
 }
 
 <div class="">
-    <h3>Liste des Clients valid&eacute;s @ViewBag.Annee</h3>
+    <h3>Liste des Clients @ViewBag.Annee</h3>
     <hr />
 </div>
 
 <section class="card box-typical-full-height">
-    <div class="card-block ">
+    <div class="card-block " style="overflow-x:scroll;">
         <p>
             @*<h3> Informations Principales</h3>*@
         </p>
@@ -24,24 +24,29 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Photo</th>
+                        <th>ConfirmationNumber</th>
                         <th>Nom</th>
-                        <th>Telecharger</th>
-                        <th>Modifier</th>
-                        <th>Dossier</th>
-                        <th>Enfants/Conjoints</th>
+                        <th>Annee</th>
+                        <th>Contact 1</th>
+                        <th>Contact 2</th>
+                        <th>Email</th>
+                        
+                        
+                        
                         
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>ID</th>
-                        <th>Photo</th>
+                        <th>ConfirmationNumber</th>
                         <th>Nom</th>
-                        <th>Telecharger</th>
-                        <th>Modifier</th>
-                        <th>Dossier</th>
-                        <th>Enfants/Conjoints</th>
+                        <th>Annee</th>
+                        <th>Contact 1</th>
+                        <th>Contact 2</th>
+                        <th>Email</th>
+
+                        
                         
                     </tr>
                 </tfoot>
@@ -50,22 +55,14 @@
 {
                     <tr>
                         <td><a href=""><b> @Html.DisplayFor(modelItem => item.InscriptionId)</b> </a></td>
-                        <td> <img  src="/@Html.DisplayFor(modelItem => item.Photo)" width="40" height="40">  </td>
+                        <td> @Html.DisplayFor(modelItem => item.ConfimationNumber)  </td>
                         <td> <b> @Html.DisplayFor(modelItem => item.Nom) </b> </td>
-                        <td>
-                            <a href="~/@Html.DisplayFor(modelItem => item.Photo)" style="font-weight:bold;">Photo</a>
-                            
-</td>
-                        <td>
-                            <a asp-action="ModifierInscription" asp-controller="Account" style="font-weight:bold;"  asp-route-id="@item.InscriptionId" asp-route-clientsId="@item.ClientsId">Modifier</a> 
-                        </td>
-                        <td>
-                            <a asp-action="DetailsInscription" asp-controller="Account" style="font-weight:bold;" asp-route-id="@item.ClientsId">Details</a> 
-                        </td>
-                        <td>
-                            <a asp-action="AjouterEnfants" asp-controller="Account" style="font-weight:bold;" asp-route-idclient="@item.ClientsId">Ajouter</a>
-                        </td>
+                        <td> <a href=""><b> @Html.DisplayFor(modelItem => item.datenaisan) </b></a> </td>
+                        <td> @Html.DisplayFor(modelItem => item.Tel1)  </td>
+                        <td> @Html.DisplayFor(modelItem => item.Tel2)  </td>
+                        <td> @Html.DisplayFor(modelItem => item.Email)  </td>
                         
+                       
                         
                     </tr>
 }

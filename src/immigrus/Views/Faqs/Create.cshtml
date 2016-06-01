@@ -1,14 +1,14 @@
 @model immigrus.Models.Faq
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Ajouter FAQ";
 }
 
-<h2>Create</h2>
+<h5>Ajouter FAQ</h5>
 
 <form asp-action="Create">
     <div class="form-horizontal">
-        <h4>Faq</h4>
+        <h5>Faq</h5>
         <hr />
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
         <div class="form-group">
@@ -27,14 +27,14 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Valider" class="btn btn-default" />
             </div>
         </div>
     </div>
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Retour &agrave; la liste</a>
 </div>
 
 @section Scripts {

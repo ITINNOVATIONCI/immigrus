@@ -14,7 +14,10 @@ namespace immigrus.Models
         public string Photo { get; set; }
         public string Email { get; set; }
         public string Tel1 { get; set; }
+        public string Tel2 { get; set; }
         public string ConfimationNumber { get; set; }
         public string Resultat { get; set; }
+        public string datenaisan { get; set; }
+
     }
 }

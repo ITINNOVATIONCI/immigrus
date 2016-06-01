@@ -466,6 +466,94 @@ namespace immigrus.Controllers
             return View();
         }
 
+        public IActionResult AjouterEnfants(string idclient)
+        {
+
+
+            // If we got this far, something failed, redisplay form
+            ViewBag.idclient = idclient;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ValiderAjouterEnfants(Enfants enfants, ICollection<IFormFile> files)
+        {
+
+           
+                string idpart = DateTime.UtcNow.ToString("yyyyMMddhhmmss");
+                Random rnd = new Random();
+                int num = rnd.Next(0, 4);
+
+                string insId = "EF" + idpart + num;
+
+                var rep = UploadMultipleBool(files, insId);
+
+                if (rep.Result)
+                {
+
+
+
+                   
+
+                    string fileName = "";
+                    string cheminPhoto = "";
+                    foreach (var file in files)
+                    {
+                        if (file.Length > 0)
+                        {
+                            fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                            cheminPhoto = Parametre.SMALLPATH + insId + Path.GetExtension(fileName);
+                        }
+                    }
+
+
+                try
+                {
+                    DateTime dt = Convert.ToDateTime(enfants.DateNais).ToUniversalTime();
+                    enfants.DateNais = dt;
+                    enfants.Id = insId;
+                    enfants.Photo = cheminPhoto;
+
+                    _dbContext.Enfants.Add(enfants);
+                    _dbContext.SaveChanges();
+
+
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                    
+                   
+
+                   
+
+                }
+                else
+                {
+                    ViewBag.errorMessage = "Veuillez choisir une photo";
+                }
+
+
+          
+            // If we got this far, something failed, redisplay form
+            return View("AjouterEnfants");
+        }
+
+
+
+   
+
+        public IActionResult ChargerPays()
+        {
+
+            var lstpays = _dbContext.Pays.ToList();
+
+            return Json(lstpays);
+        }
+
 
         // POST: /Account/Register
         [HttpPost]
@@ -772,7 +860,7 @@ namespace immigrus.Controllers
 
 
             // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
-            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER).OrderBy(t=>t.DateTrans).Take(30).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER).OrderByDescending(t=>t.DateTrans).Take(30).ToList();
 
             foreach (var item in lstTrans)
             {
@@ -1036,8 +1124,43 @@ namespace immigrus.Controllers
         }
 
 
-        
 
+        public IActionResult ModifierClients(string id, CustomInscription item)
+        {
+
+            
+
+           // var inscription = _dbContext.Inscription.Where(i => i.Id == id && i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER).FirstOrDefault();
+           // var appuser = _dbContext.ApplicationUser.Where(a => a.ClientsId == clientsId && a.Etat == "ACTIF").FirstOrDefault();
+
+
+           // ViewBag.inscription = inscription;
+            ////ViewBag.appuser = appuser;
+            return View(item);
+        }
+
+        [HttpPost]
+        public IActionResult ValiderModifierClients(string ConfirmationNumber,string datenaisan,string Tel1,string Tel2,string Email,string Id,string ClientsId)
+        {
+
+            
+
+             var inscription = _dbContext.Inscription.Where(i => i.Id == Id && i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF").FirstOrDefault();
+             var appuser = _dbContext.ApplicationUser.Where(a => a.ClientsId == ClientsId && a.Etat == "ACTIF").FirstOrDefault();
+
+
+            inscription.ConfimationNumber = ConfirmationNumber;
+            appuser.Email = Email;
+            appuser.Tel1=Tel1;
+            appuser.Tel2=Tel2;
+            appuser.Tel1 = Tel1;
+           
+            appuser.DateNais = Convert.ToDateTime( appuser.DateNais.Day+"/"+appuser.DateNais.Month+"/"+ datenaisan);
+
+            _dbContext.SaveChanges();
+
+            return RedirectToAction("ListeClients");
+        }
 
 
         // GET: ApplicationUsers/Details/5
@@ -1070,6 +1193,49 @@ namespace immigrus.Controllers
             {
                 return HttpNotFound();
             }
+
+            return View(applicationUser);
+        }
+
+        public IActionResult DetailsResultatEchec(string id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            ApplicationUser applicationUser = _dbContext.ApplicationUser.Where(m => m.ClientsId == id).FirstOrDefault();
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+
+            var inscription = _dbContext.Inscription.Where(i => i.ClientId == id && i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut==Parametre.ECHEC).FirstOrDefault();
+
+
+            ViewBag.cn = inscription.ConfimationNumber;
+
+            return View(applicationUser);
+        }
+
+
+        public IActionResult DetailsResultatAdmis(string id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            ApplicationUser applicationUser = _dbContext.ApplicationUser.Where(m => m.ClientsId == id).FirstOrDefault();
+            if (applicationUser == null)
+            {
+                return HttpNotFound();
+            }
+
+            var inscription = _dbContext.Inscription.Where(i => i.ClientId == id && i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut==Parametre.ADMIS).FirstOrDefault();
+
+
+            ViewBag.cn = inscription.ConfimationNumber;
 
             return View(applicationUser);
         }
@@ -1114,6 +1280,79 @@ namespace immigrus.Controllers
 
 
 
+
+        public IActionResult ListeClients()
+        {
+            List<CustomInscription> lstCustom = new List<CustomInscription>();
+
+
+            // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER).OrderByDescending(t => t.DateTrans).ToList();
+
+            foreach (var item in lstTrans)
+            {
+                CustomInscription cstrans = new CustomInscription();
+                var recup = _dbContext.ApplicationUser.Where(a => a.ClientsId == item.ClientId).FirstOrDefault();
+
+                cstrans.ClientsId = item.ClientId;
+                cstrans.Email = recup.Email;
+                cstrans.InscriptionId = item.Id;
+                cstrans.Nom = recup.Nom + " , " + recup.Prenoms;
+                cstrans.Email = recup.Email;
+                cstrans.Prenoms = recup.Prenoms;
+                cstrans.Photo = recup.Photo;
+                cstrans.Tel1 = recup.Tel1;
+                cstrans.Tel2 = recup.Tel2;
+                cstrans.datenaisan = recup.DateNais.Year.ToString();
+                cstrans.ConfimationNumber = item.ConfimationNumber;
+
+
+                lstCustom.Add(cstrans);
+
+            }
+
+
+            ViewBag.Annee = DateTime.UtcNow.Year;
+            return View(lstCustom);
+        }
+
+        public IActionResult ListeClientsArchives()
+        {
+            List<CustomInscription> lstCustom = new List<CustomInscription>();
+
+
+            // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.VALIDER).OrderByDescending(t => t.DateTrans).ToList();
+
+            foreach (var item in lstTrans)
+            {
+                CustomInscription cstrans = new CustomInscription();
+                var recup = _dbContext.ApplicationUser.Where(a => a.ClientsId == item.ClientId).FirstOrDefault();
+
+                cstrans.ClientsId = item.ClientId;
+                cstrans.Email = recup.Email;
+                cstrans.InscriptionId = item.Id;
+                cstrans.Nom = recup.Nom + " , " + recup.Prenoms;
+                cstrans.Email = recup.Email;
+                cstrans.Prenoms = recup.Prenoms;
+                cstrans.Photo = recup.Photo;
+                cstrans.Tel1 = recup.Tel1;
+                cstrans.Tel2 = recup.Tel2;
+                cstrans.datenaisan = recup.DateNais.Year.ToString();
+                cstrans.ConfimationNumber = item.ConfimationNumber;
+
+
+                lstCustom.Add(cstrans);
+
+            }
+
+
+            ViewBag.Annee = DateTime.UtcNow.Year;
+            return View(lstCustom);
+        }
+
+
+
         public IActionResult ResultatInscriptionDV(string idins, string idclient)
         {
             if (idins == null || idclient == null)
@@ -1149,7 +1388,7 @@ namespace immigrus.Controllers
 
 
         [HttpPost]
-        public IActionResult ValiderResultatInscriptionDV(string idins, string resultat)
+        public IActionResult ValiderResultatInscriptionDV(string idins, string resultat,string CaseNumber)
         {
             if (idins == null)
             {
@@ -1159,9 +1398,129 @@ namespace immigrus.Controllers
             var inscription = _dbContext.Inscription.Where(i => i.Id == idins && i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF").FirstOrDefault();
 
             inscription.Resultat = resultat;
+            if (!string.IsNullOrEmpty(CaseNumber))
+            {
+            inscription.CaseNumber = CaseNumber;
+            }
+           
             _dbContext.SaveChanges();
 
             return RedirectToAction("ListeDV");
+        }
+
+
+
+        public IActionResult ListeClientBloque()
+        {
+
+            List<CustomInscription> lstCustom = new List<CustomInscription>();
+
+
+            // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.BLOQUE).OrderBy(t => t.DateTrans).ToList();
+
+            foreach (var item in lstTrans)
+            {
+                CustomInscription cstrans = new CustomInscription();
+                var recup = _dbContext.ApplicationUser.Where(a => a.ClientsId == item.ClientId).FirstOrDefault();
+
+                cstrans.ClientsId = item.ClientId;
+                cstrans.Email = recup.Email;
+                cstrans.InscriptionId = item.Id;
+                cstrans.Nom = recup.Nom + " " + recup.Prenoms + " (" + recup.Email + ")";
+                cstrans.Prenoms = recup.Prenoms;
+                cstrans.Photo = recup.Photo;
+                cstrans.Tel1 = recup.Tel1;
+
+
+                lstCustom.Add(cstrans);
+
+            }
+
+            ViewBag.Annee = DateTime.UtcNow.Year;
+            return View(lstCustom);
+        }
+
+
+        public IActionResult DebloquerClient(string idins)
+        {
+
+            var inscription = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.BLOQUE).FirstOrDefault();
+
+            inscription.Statut = Parametre.VALIDER;
+
+            _dbContext.SaveChanges();
+
+            return View("ListeClientBloque");
+        }
+
+
+        public IActionResult ListeResultatEchec()
+        {
+
+            List<CustomInscription> lstCustom = new List<CustomInscription>();
+
+
+            // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.ECHEC).OrderBy(t => t.DateTrans).Take(100).ToList();
+
+            foreach (var item in lstTrans)
+            {
+                CustomInscription cstrans = new CustomInscription();
+                var recup = _dbContext.ApplicationUser.Where(a => a.ClientsId == item.ClientId).FirstOrDefault();
+
+                cstrans.ClientsId = item.ClientId;
+                cstrans.Email = recup.Email;
+                cstrans.InscriptionId = item.Id;
+                cstrans.Nom = recup.Nom + " " + recup.Prenoms + " (" + recup.Email + ")";
+                cstrans.Prenoms = recup.Prenoms;
+                cstrans.Photo = recup.Photo;
+                cstrans.Tel1 = recup.Tel1;
+                cstrans.ConfimationNumber = item.ConfimationNumber;
+                cstrans.Resultat = item.Resultat;
+
+
+                lstCustom.Add(cstrans);
+
+            }
+
+
+
+            return View(lstCustom);
+        }
+
+        public IActionResult ListeResultatAdmis()
+        {
+
+            List<CustomInscription> lstCustom = new List<CustomInscription>();
+
+
+            // var lstTrans = _context.Transactions.Where(t=>t.idUtilisateur.Equals(id)).OrderByDescending(c => c.DateTransaction).ToList();
+            var lstTrans = _dbContext.Inscription.Where(i => i.Annee == DateTime.UtcNow.Year.ToString() && i.Etat == "ACTIF" && i.Statut == Parametre.ADMIS).OrderBy(t => t.DateTrans).Take(100).ToList();
+
+            foreach (var item in lstTrans)
+            {
+                CustomInscription cstrans = new CustomInscription();
+                var recup = _dbContext.ApplicationUser.Where(a => a.ClientsId == item.ClientId).FirstOrDefault();
+
+                cstrans.ClientsId = item.ClientId;
+                cstrans.Email = recup.Email;
+                cstrans.InscriptionId = item.Id;
+                cstrans.Nom = recup.Nom + " " + recup.Prenoms + " (" + recup.Email + ")";
+                cstrans.Prenoms = recup.Prenoms;
+                cstrans.Photo = recup.Photo;
+                cstrans.Tel1 = recup.Tel1;
+                cstrans.ConfimationNumber = item.ConfimationNumber;
+                cstrans.Resultat = item.Resultat;
+
+
+                lstCustom.Add(cstrans);
+
+            }
+
+
+
+            return View(lstCustom);
         }
 
         #region Helpers

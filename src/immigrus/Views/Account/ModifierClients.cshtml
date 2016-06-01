@@ -1,0 +1,343 @@
+
+@model CustomInscription
+
+@{
+    ViewData["Title"] = "ModifierClients";
+    Layout = "_Layout";
+}
+
+<div class="col-md-offset-1">
+    <h5>Formulaire de modification  </h5>
+    @*<p>
+
+        Veuillez fournir des informations correctes et sans erreurs afin d'&ecirc;tre s&ucirc;r  d'obtenir un visa apr&egrave; s s&eacute;lection.<br />
+        Des erreurs dans vos donn&eacute;es fournies peuvent &ecirc;tre source de disqualification.
+        <br /> L'inscription se fait qu'une seule et unique fois !
+
+    </p>*@
+</div>
+
+<section class="card box-typical-full-height">
+    <div class="card-block col-md-offset-1">
+        <p>
+            <h5> Informations du client</h5>
+        </p>
+        <hr />
+        <div class="row m-t-lg ">
+            <div class="col-md-6 " style="font-size:medium;">
+                <span style="font-weight:bold;" >@ViewBag.errorMessage</span>
+               @* <form id="form-signup_v1" name="form-signup_v1" method="POST">*@
+                <form asp-controller="Account" method="post" asp-action="ValiderModifierClients">
+                    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                    
+                    <div class="form-group">
+                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-nom">Nom et pr&eacute;noms</label>
+                        <div class="form-control-wrapper">
+                            <input id="Nom"
+                                   class="form-control"
+                                   name="Nom"
+                                   readonly
+                                   value="@Html.DisplayFor(modelItem => modelItem.Nom)"
+                                   type="text" data-validation="[L>=2, L<=18, MIXED]"
+                                   data-validation-message="Veuillez saisir un nom valide" required />
+                            <span asp-validation-for="Nom" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                  
+                    <div class="form-group">
+                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-nom">Confimation Number</label>
+                        <div class="form-control-wrapper">
+                            <input id="cn"
+                                   class="form-control"
+                                   name="ConfirmationNumber"
+                                   value="@Html.DisplayFor(modelItem => modelItem.ConfimationNumber)"
+                                   type="text" data-validation="[L>=2, L<=18, MIXED]"
+                                   data-validation-message="Veuillez saisir un nom valide" required />
+                            <span asp-validation-for="ConfimationNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-nom">Ann&eacute;e de naissance</label>
+                        <div class="form-control-wrapper">
+                            <input id="Annee"
+                                   class="form-control"
+                                   name="datenaisan"
+                                   value="@Html.DisplayFor(modelItem => modelItem.datenaisan)"
+                                   type="text" data-validation="[L>=2, L<=18, MIXED]"
+                                   data-validation-message="Veuillez saisir un nom valide" required />
+                            <span asp-validation-for="datenaisan" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-nom">Contact 1</label>
+                        <div class="form-control-wrapper">
+                            <input id="Tel1"
+                                   class="form-control"
+                                   name="Tel1"
+                                   value="@Html.DisplayFor(modelItem => modelItem.Tel1)"
+                                   type="text" data-validation="[L>=2, L<=18, MIXED]"
+                                   data-validation-message="Veuillez saisir un nom valide" required />
+                            <span asp-validation-for="Tel1" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-nom">Contact 2</label>
+                        <div class="form-control-wrapper">
+                            <input id="Tel2"
+                                   class="form-control"
+                                   name="Tel2"
+                                   value="@Html.DisplayFor(modelItem => modelItem.Tel2)"
+                                   type="text" data-validation="[L>=2, L<=18, MIXED]"
+                                   data-validation-message="Veuillez saisir un nom valide" required />
+                            <span asp-validation-for="Tel2" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-nom">Email</label>
+                        <div class="form-control-wrapper">
+                            <input id="Email"
+                                   class="form-control"
+                                   name="Email"
+                                   value="@Html.DisplayFor(modelItem => modelItem.Email)"
+                                   type="text" data-validation="[L>=2, L<=18, MIXED]"
+                                   data-validation-message="Veuillez saisir un nom valide" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+
+                    <input type="hidden" name="ClientsId" value="@Model.ClientsId" />
+                    <input type="hidden" name="Id" value="@Model.InscriptionId" />
+                    
+
+                    <div class="form-group">
+                        <button type="submit" class="btn-large waves-effect waves-light blue">Modifier</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
+
+        
+
+       
+
+    </div>
+
+</section>
+
+
+@section scripts {
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    @*<script src="/js/lib/jquery/jquery.min.js"></script>
+        <script src="/js/lib/tether/tether.min.js"></script>
+        <script src="/js/lib/bootstrap/bootstrap.min.js"></script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/app.js"></script>*@
+
+    @*<script src="/js/lib/clockpicker/bootstrap-clockpicker.min.js"></script>
+        <script src="/js/lib/clockpicker/bootstrap-clockpicker-init.js"></script>*@
+    @*<script src="~/js/lib/daterangepicker/daterangepicker.js"></script>
+        <script src="~/js/lib/bootstrap-select/bootstrap-select.min.js"></script>*@
+
+    @*<script src="/js/lib/typeahead/jquery.typeahead.min.js" type="text/javascript"></script>
+    <script src="/js/lib/select2/select2.full.min.js" type="text/javascript"></script>
+    <script src="/js/lib/typeahead/typeahead-init.js" type="text/javascript"></script>*@
+
+    @*<script src="/js/lib/input-mask/jquery.mask.min.js" type="text/javascript"></script>
+    <script src="/js/lib/input-mask/input-mask-init.js" type="text/javascript"></script>*@
+
+@*<base href="http://demos.telerik.com/kendo-ui/datepicker/index">*@
+<script src="//kendo.cdn.telerik.com/2016.2.504/js/jquery.min.js" type="text/javascript"></script>
+<script src="//kendo.cdn.telerik.com/2016.2.504/js/kendo.all.min.js" type="text/javascript"></script>
+<script>
+    $("#datepicker").kendoDatePicker({
+        culture: "fr-FR",
+        // display month and year in the input
+        format: "dd/MM/yyyy"
+        //....
+    })
+
+        //var dp = $("#datepicker").kendoDatePicker().data("kendoDatePicker");
+
+        //dp.dateView
+        //  .calendar.element
+
+        //  .append('<div class="k-footer"><a href="#" class="k-link k-nav-today">' + kendo.toString(new Date(), "dd/MM/yyyy") + "</a></div>")
+        //  .find(".k-footer:first")
+        //  .remove();
+
+       
+</script>
+ <script>
+                $(document).ready(function() {
+                    //$("#files").kendoUpload({
+                    //    async: {
+                    //        saveUrl: "UploadMultiple",
+                    //        removeUrl: "remove",
+                    //        uploading: 'chargement en cours...',
+                    //        autoUpload: true
+                    //    },                        
+                    //    localization: {
+                    //    select: 'Choisir la photo',
+                    //    remove: 'Supprimer la photo',
+                    //    uploading: 'chargement en cours...',                        
+                    //    cancel: 'Annuler'
+                    //}
+                    //});
+                    $("#files").kendoUpload({
+                        localization: {
+                                select: 'Choisir la photo',
+                                remove: 'Supprimer la photo',
+                                uploading: 'chargement en cours...',                        
+                                cancel: 'Annuler'
+                            }
+                    });
+
+
+                   
+
+                });
+            </script>
+
+
+
+<link rel="stylesheet" href="/src/jquery.typeahead.css">
+
+@*<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>*@
+<!--script src="../dist/jquery.typeahead.min.js"></script-->
+<script src="/src/jquery.typeahead.js"></script>
+
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
+<script>
+
+    $.typeahead({
+        input: '.js-typeahead-country_v1',
+        order: "desc",
+        source: {
+            data: [
+                "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+                "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh",
+                "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
+                "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma",
+                "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad",
+                "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the",
+                "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti",
+                "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador",
+                "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
+                "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea",
+                "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India",
+                "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan",
+                "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos",
+                "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+                "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
+                "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco",
+                "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
+                "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru",
+                "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino",
+                "Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone",
+                "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain",
+                "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan",
+                "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+                "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
+                "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+            ]
+        },
+        callback: {
+            onInit: function (node) {
+                console.log('Typeahead Initiated on ' + node.selector);
+            }
+        }
+    });
+    $.typeahead({
+        input: '.js-typeahead-country_v2',
+        order: "desc",
+        source: {
+            data: [
+                "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+                "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh",
+                "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
+                "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma",
+                "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad",
+                "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the",
+                "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti",
+                "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador",
+                "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
+                "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea",
+                "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India",
+                "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan",
+                "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos",
+                "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+                "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
+                "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco",
+                "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
+                "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru",
+                "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino",
+                "Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone",
+                "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain",
+                "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan",
+                "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+                "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
+                "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+            ]
+        },
+        callback: {
+            onInit: function (node) {
+                console.log('Typeahead Initiated on ' + node.selector);
+            }
+        }
+    });
+    $.typeahead({
+        input: '.js-typeahead-country_v3',
+        order: "desc",
+        source: {
+            data: [
+                "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+                "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh",
+                "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
+                "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma",
+                "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad",
+                "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the",
+                "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti",
+                "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador",
+                "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
+                "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea",
+                "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India",
+                "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan",
+                "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos",
+                "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+                "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
+                "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco",
+                "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
+                "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru",
+                "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino",
+                "Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone",
+                "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain",
+                "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan",
+                "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+                "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
+                "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+            ]
+        },
+        callback: {
+            onInit: function (node) {
+                console.log('Typeahead Initiated on ' + node.selector);
+            }
+        }
+    });
+</script>
+}

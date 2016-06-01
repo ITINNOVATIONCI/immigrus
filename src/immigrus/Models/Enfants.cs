@@ -15,9 +15,13 @@ namespace immigrus.Models
         public DateTime DateNais { get; set; }
         public string Sexe { get; set; }
         public string Photo { get; set; }
+        public string LieuNais { get; set; }
+        public string Type { get; set; }
+        
+
 
         //Foreign key for Clients
         public string ClientsId { get; set; }
-        
+        public string idPays { get; set; }
     }
 }

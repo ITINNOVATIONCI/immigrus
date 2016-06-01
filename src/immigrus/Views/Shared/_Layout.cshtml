@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.504/styles/kendo.material.min.css" />
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        @*<link href="/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />*@
+        <link href="/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link href="/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
 
     @RenderSection("scriptsh", required: false)
@@ -115,8 +115,31 @@
                     <li><a asp-controller="Account" asp-action="ListeInscription"><span class="lbl">Liste Inscription</span></a></li>
                     <li><a asp-controller="Account" asp-action="ListeDV"><span class="lbl">Liste DV</span></a></li>
                     <li><a asp-controller="Account" asp-action="ListeConfirmationNumber"><span class="lbl">Liste Postulant avc CN</span></a></li>
-                    <li><a asp-controller="Account" asp-action="ListeResultat"><span class="lbl">Liste Resultat</span></a></li>
-                    <li><a asp-controller="Account" asp-action="ListeBloque"><span class="lbl">Liste Clients Bloqu&eacute;s</span></a></li>
+                   @* <li><a asp-controller="Account" asp-action="ListeResultat"><span class="lbl">Liste Resultat</span></a></li>*@
+                    <li><a asp-controller="Account" asp-action="ListeClientBloque"><span class="lbl">Liste Clients Bloqu&eacute;s</span></a></li>
+                </ul>
+            </li>
+
+            <li class="brown with-sub">
+                <span>
+                    <i class="font-icon font-icon-user"></i>
+                    <span class="lbl">Resultats</span>
+                </span>
+                <ul>
+                    <li><a asp-controller="Account" asp-action="ListeResultatEchec"><span class="lbl">Liste Echec</span></a></li>
+
+                    <li><a asp-controller="Account" asp-action="ListeResultatAdmis"><span class="lbl">Liste Admis</span></a></li>
+                                   </ul>
+            </li>
+            <li class="brown with-sub">
+                <span>
+                    <i class="font-icon font-icon-user"></i>
+                    <span class="lbl">Infos Clients</span>
+                </span>
+                <ul>
+                    <li><a asp-controller="Account" asp-action="ListeClients"><span class="lbl">Liste des clients</span></a></li>
+
+                    <li><a asp-controller="Account" asp-action="ListeClientsArchives"><span class="lbl">Liste Clients Archiv&eacute;s</span></a></li>
                 </ul>
             </li>
 

@@ -1,7 +1,7 @@
 @model immigrus.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Mise a jour du resultat";
+    ViewData["Title"] = "Details Resultat Admis";
     Layout = "_Layout";
 }
 
@@ -121,6 +121,14 @@
                         <b>Date de cr&eacute;ation</b> &nbsp;&nbsp;&nbsp;  @Html.DisplayFor(model => model.DateCreation)
                     </p>
 
+
+                    <p>
+                        <h5 style="color:orange;font-weight:bold;">Information DV</h5>
+                        <hr />
+                        <b>Confirmation Number  </b> &nbsp;&nbsp;&nbsp; <b style="color:red;"> @ViewBag.cn</b>
+                    </p>
+
+
                 </div>
 
                 <div class="pull-right" style="float:right;">
@@ -135,41 +143,9 @@
                    
 </div>
             </div>
-        <form asp-controller="Account" method="post" asp-action="ValiderResultatInscriptionDV">
-            <div class="form-group col-md-offset-1">
-               
-                    <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-resultat">R&eacute;sultat : </label>
-                    <div class="form-control-wrapper">
-                        <div class="radio">
-                            <input type="radio" name="resultat" required id="radio-1" value="ECHEC">
-                            <label for="radio-1">ECHEC </label>
 
-                            <input type="radio" name="resultat" id="radio-2" value="ADMIS">
-                            <label for="radio-2">ADMIS </label>
-                        </div>
+           
 
-
-                    </div>
-                </div>
-
-            <div id="formcasen" class="form-group col-md-offset-1" style="display:none;">
-                <label style="font-size:large;font-weight:bold;" class="form-label" for="signup_v1-casenumber">Case Number : </label>
-                <div class="form-control-wrapper">
-                    <input id="casenum"
-                           class="form-control"
-                           name="CaseNumber"
-                           
-                           type="text" data-validation="[L>=6, L<=22, MIXED]"
-                           data-validation-message="Veuillez saisir le case number"
-                            />
-                </div>
-            </div>
-
-            <input type="hidden" value="@ViewBag.idinscription" name="idins" />
-             <div class="form-group col-md-offset-1">
-                <button type="submit" id="btn" class="btn-large waves-effect waves-light blue">Valider</button>
-            </div>
-        </form>
 
 
                     @*<p>
@@ -180,22 +156,3 @@
         </div>
     
 </section>
-
-@section scripts {
-@*<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script></script>*@
-<script>
-
-$("input[name='resultat']").click(function(){
-    //alert('You clicked radio!');
-    if ($('input:radio[name=resultat]:checked').val() == "ADMIS") {
-        //alert($('input:radio[name=resultat]:checked').val());
-        //$('#select-table > .roomNumber').attr('enabled',false);
-        $("#formcasen").show();
-    }
-    else {
-
-        $("#formcasen").hide();
-    }
-});
-     </script>
-}
