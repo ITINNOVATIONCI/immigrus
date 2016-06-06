@@ -1,6 +1,7 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="../gulpfile.js" />
 /// <reference path="js/app.js" />
+/// <reference path="js/clients.js" />
 /// <reference path="js/init.js" />
 /// <reference path="js/jquery.lazyload.min.js" />
 /// <reference path="js/lib/blockUI/jquery.blockUI.js" />

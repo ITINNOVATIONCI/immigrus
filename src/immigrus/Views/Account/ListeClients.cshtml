@@ -1,5 +1,5 @@
 
-@model List<CustomInscription>
+@*@model List<CustomInscription>*@
 
 @{
     ViewData["Title"] = "Liste des Clients ";
@@ -7,7 +7,7 @@
 }
 
 <div class="">
-    <h3>Liste des Clients @ViewBag.Annee</h3>
+    <h4 style="color:orangered;">Liste des Clients @ViewBag.Annee</h4>
     <hr />
 </div>
 
@@ -20,58 +20,18 @@
        
 
 
-            <table id="example" class="mdl-data-table" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ConfirmationNumber</th>
-                        <th>Nom</th>
-                        <th>Annee</th>
-                        <th>Contact 1</th>
-                        <th>Contact 2</th>
-                        <th>Email</th>
-                        
-                        <th>Modifier</th>
-                        
-                        
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>ID</th>
-                        <th>ConfirmationNumber</th>
-                        <th>Nom</th>
-                        <th>Annee</th>
-                        <th>Contact 1</th>
-                        <th>Contact 2</th>
-                        <th>Email</th>
+            <div id="example" >
+               
 
-                        <th>Modifier</th>
-                        
-                    </tr>
-                </tfoot>
-                <tbody>
-@foreach (var item in Model)
-{
-                    <tr>
-                        <td><a href=""><b> @Html.DisplayFor(modelItem => item.InscriptionId)</b> </a></td>
-                        <td> @Html.DisplayFor(modelItem => item.ConfimationNumber)  </td>
-                        <td> <b> @Html.DisplayFor(modelItem => item.Nom) </b> </td>
-                        <td> <a href=""><b> @Html.DisplayFor(modelItem => item.datenaisan) </b></a> </td>
-                        <td> @Html.DisplayFor(modelItem => item.Tel1)  </td>
-                        <td> @Html.DisplayFor(modelItem => item.Tel2)  </td>
-                        <td> @Html.DisplayFor(modelItem => item.Email)  </td>
-                        <td style="font-weight:bold;">
-                            @*<a asp-action="ModifierClients" asp-controller="Account"   asp-route-id="@item.InscriptionId"
-                                asp-route-item="@item">Modifier</a>*@ 
-                            @Html.ActionLink("Modifer","ModifierClients", "Account", item)
-                        </td>
-                       
-                        
-                    </tr>
-}
-                </tbody>
-            </table>
+
+                <div id="grid"></div>
+
+
+
+
+
+
+            </div>
 
 
        
@@ -86,8 +46,30 @@
 </section>
 
 @section scriptsh {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/dataTables.material.min.css " type="text/css">
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/dataTables.material.min.css " type="text/css">*@
+    
+    <style type="text/css">
+    .customer-photo {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 40px;
+        padding-left: 3px;
+    }
+</style>
     }
 
 
@@ -97,55 +79,76 @@
     <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>*@
 
   @*<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>*@
-<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.11/js/dataTables.material.min.js"></script>
+@*<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.11/js/dataTables.material.min.js"></script>*@
 
-<script src="/js/jquery.lazyload.min.js"></script>
+@*<script src="/js/jquery.lazyload.min.js"></script>*@
+
+<script src="//kendo.cdn.telerik.com/2016.2.504/js/jquery.min.js"></script>
+<script src="//kendo.cdn.telerik.com/2016.2.504/js/kendo.all.min.js"></script>
+    <script src="/js/clients.js"></script>
 
 <script>
-    $(document).ready(function () {
-       
-    $('#example').DataTable( {
-        columnDefs: [
-            {
-                targets: [ 0, 1, 2 ],
-                className: 'mdl-data-table__cell--non-numeric'
-            }
-        ],
+    //$(document).ready(function () {
+        
+ 
 
-        language: {
-        processing: "Traitement en cours...",
-        search: "Rechercher&nbsp;:",
-        lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
-        info: "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-        infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-        infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-        infoPostFix: "",
-        loadingRecords: "Chargement en cours...",
-        zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
-        emptyTable: "Aucune donn&eacute;e disponible dans le tableau",
-        paginate: {
-            first: "Premier",
-            previous: "Pr&eacute;c&eacute;dent",
-            next: "Suivant",
-            last: "Dernier"
-        },
-        aria: {
-            sortAscending: ": activer pour trier la colonne par ordre croissant",
-            sortDescending: ": activer pour trier la colonne par ordre décroissant"
-        }
-    }
+    //        $("#grid").kendoGrid({
+    //            dataSource: {
+    //                type: "json",
+    //                transport: {
+    //                    read: "ListeClientss"
+    //                },
+    //                pageSize: 20
+    //            },
+    //            height: 550,
+    //            groupable: true,
+    //            sortable: true,
+    //            pageable: {
+    //                refresh: true,
+    //                pageSizes: true,
+    //                buttonCount: 7
+    //            },
+    //            columns: [{
+    //                //template: "<div class='customer-photo'" +
+    //                //                "style='background-image: url(../content/web/Customers/#:data.CustomerID#.jpg);'></div>" +
+    //                //            "<div class='customer-name'>#: ContactName #</div>",
+    //                field: "InscriptionId",
+    //                title: "ID",
+    //                width: 180
+    //            }, {
+    //                field: "ConfimationNumber",
+    //                title: "ConfimationNumber",
+    //                width: 200
+    //            }, {
+    //                field: "Nom",
+    //                title: "Nom",
+    //                width: 220,
+    //                filterable: {
+    //                    cell: {
+    //                        showOperators: false
+    //                    }
+    //                }
+    //            }, {
+    //                field: "datenaisan",
+    //                title:"date",
+    //                width: 80
+    //            }, {
+    //                field: "Tel1",
+    //                title: "Contact",
+    //                width: 120
+    //            }, {
+    //                field: "Tel2",
+    //                title: "Contact 2",
+    //                width: 120
+    //            }, {
+    //                field: "Email",
+    //                title: "Email",
+    //                width: 130
+    //            }]
+    //        });
+    //    });
+</script>
 
-    });
 
-    
-});
-
-
-</script>       
-    <script>
-        $(function () {
-            $("img.lazy").lazyload();
-        });
-    </script>
      }

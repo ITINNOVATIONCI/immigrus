@@ -1283,6 +1283,12 @@ namespace immigrus.Controllers
 
         public IActionResult ListeClients()
         {
+            
+            return View();
+        }
+
+        public IActionResult ListeClientss()
+        {
             List<CustomInscription> lstCustom = new List<CustomInscription>();
 
 
@@ -1313,7 +1319,7 @@ namespace immigrus.Controllers
 
 
             ViewBag.Annee = DateTime.UtcNow.Year;
-            return View(lstCustom);
+            return Json(lstCustom);
         }
 
         public IActionResult ListeClientsArchives()
